@@ -3,3 +3,5 @@ declare global {
     __POWERED_BY_QIANKUN__?: boolean;
   }
 }
+
+export {}
