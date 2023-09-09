@@ -1,12 +1,12 @@
-import { onMounted, onUnmounted } from 'vue'
+import { useEffect } from "react"
 
 export function useEvent(name: string, callback: any) {
-  onMounted(() => {
+  useEffect(() => {
     window.addEventListener(name, callback, false)
-  })
-  onUnmounted(() => {
-    window.removeEventListener(name, callback, false)
-  })
+    return () => {
+      window.removeEventListener(name, callback, false)
+    }
+  }, [])
 }
 
 export function useEmit(name: string, value: any) {

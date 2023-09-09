@@ -1,32 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { registerMicroApps, start } from 'qiankun';
 import 'normalize.css'
 import App from './App'
+import qiankunInit from './qiankun'
+import request from './utils/request'
+import store from '@/store'
+import { ConfigResponse } from './types/api'
 
-
-ReactDOM.createRoot(document.querySelector('#app') as HTMLElement)
-  .render(<App></App>)
-
-registerMicroApps([
-  {
-    name: 'react-app', // app name registered
-    entry: '//localhost:8001',
-    container: '#root',
-    activeRule: (location) => {
-      return location.pathname.startsWith('/databoard')
-    },
-  },
-  {
-    name: 'vue-app', // app name registered
-    entry: '//localhost:8002',
-    container: '#root',
-    activeRule: (location) => {
-      return location.pathname.startsWith('/system')
-    },
-  },
-]);
-
-start();
+function init() {
+  ReactDOM.createRoot(document.querySelector('#app') as HTMLElement)
+    .render(<App></App>)
+    qiankunInit()
+  }
+  
+  if (location.pathname !== '/login') {
+    request.get<ConfigResponse>('/config').then((res) => {
+    store.dispatch({ type: 'setUserInfo', value: res.data.userInfo })
+    store.dispatch({ type: 'setMenus', value: res.data.rules.menus })
+    console.log('res => ', res)
+    init()
+  }).catch(err => {})
+} else {
+  init()
+}
 
 export default {};

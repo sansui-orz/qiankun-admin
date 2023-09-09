@@ -1,69 +1,12 @@
-import React, { useState, useCallback, memo } from 'react'
-import type { MenuProps } from 'antd'
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import { Layout, Menu as AntdMenu, theme } from 'antd'
+import React, { useCallback, useMemo } from 'react'
+import { Layout, Menu as AntdMenu } from 'antd'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '@/store'
+import type { MenuClickEventHandler } from 'rc-menu/lib/interface'
+import { trasMenus, getTargetMenu, getActivePath } from './tools'
+import { useRouteChange } from '@/hooks';
 import './index.less'
-
-type MenuItem = Required<MenuProps>['items'][number] & {
-  children?: MenuItem[],
-  url: string
-};
-
 const { Sider } = Layout
-
-function getItem(
-  label: React.ReactNode,
-  key?: React.Key | null,
-  url = '',
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: 'group',
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-    url
-  } as MenuItem;
-}
-
-const items: MenuItem[] = [
-  getItem('数据中心', 'sub1', '', <MailOutlined />, [
-    getItem('数据看板', '1', '/databoard'),
-    getItem('数据详情', '2', '/databoard/detail'),
-    getItem('数据表格', '3', '/databoard/data-table'),
-  ]),
-
-  getItem('系统管理', 'sub2', '', <AppstoreOutlined />, [
-    getItem('账号管理', '5', '/system/accounts'),
-    getItem('角色管理', '6', '/system/rules'),
-    getItem('菜单管理', '16', '/system/menus'),
-    getItem('其他管理', 'sub3', '', null, [getItem('Option 7', '7'), getItem('Option 8', '8')]),
-  ]),
-
-  getItem('Navigation Three', 'sub4', '', <SettingOutlined />, [
-    getItem('Option 9', '9'),
-    getItem('Option 10', '10'),
-    getItem('Option 11', '11'),
-    getItem('Option 12', '12'),
-  ]),
-];
-
-function getTargetMenu(menus: MenuItem[], keys: string[]): MenuItem | undefined {
-  const key = keys.shift()
-  for (let i = 0; i < menus.length; i++) {
-    if (menus[i]?.key === key) {
-      if (keys.length > 0 && menus[i]?.children) {
-        return getTargetMenu(menus[i]?.children!, keys)
-      } else if (keys.length === 0) {
-        return menus[i]
-      }
-    }
-  }
-  return undefined
-}
 
 interface iMenuProps {
   collapsed: boolean;
@@ -73,15 +16,29 @@ interface iMenuProps {
 
 function Menu(props: iMenuProps) {
   const collapsed = props.collapsed;
-  const [current, setCurrent] = useState('1');
+  const { menus, activeMenu } = useSelector<RootState, RootState['menusState']>(state => state.menusState)
+  const memoMenus = useMemo(() => trasMenus(menus || []), [menus])
+  const dispatch = useDispatch()
+  
+  const setActiveMenu = useCallback((key: string) => {
+    dispatch({ type: 'setActiveMenu', value: key })
+  }, [])
 
-  const onClick: MenuProps['onClick'] = (e) => {
-    const target = getTargetMenu(items, e.keyPath.reverse());
+  const onClick = useCallback<MenuClickEventHandler>((e) => {
+    const target = getTargetMenu(memoMenus, e.key);
     if (target?.url && props.emitRouteChange) {
       props.emitRouteChange(target.url)
     }
-    setCurrent(e.key);
-  };
+    setActiveMenu(e.key);
+  }, [memoMenus]);
+
+  useRouteChange((location) => {
+    if (location.pathname !== activeMenu) {
+      const activePath = getActivePath(memoMenus, location.pathname)
+      setActiveMenu(activePath!);
+    }
+  }, [memoMenus])
+
   return <Sider
     breakpoint="lg"
     className='menu-sider'
@@ -96,10 +53,10 @@ function Menu(props: iMenuProps) {
     <AntdMenu
       theme="dark"
       onClick={onClick}
-      defaultOpenKeys={['sub1']}
-      selectedKeys={[current]}
+      defaultOpenKeys={[memoMenus[0].key as string]}
+      selectedKeys={[activeMenu]}
       mode="inline"
-      items={items}
+      items={memoMenus}
     />
   </Sider>
 }

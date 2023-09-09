@@ -4,6 +4,7 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom'
 import Header from '@/components/header'
 import Menu from '@/components/menu'
+import Tabs from '@/components/tabs'
 
 
 function Layout(props: { children: ReactNode, clickHandle?: (path: string) => void }) {
@@ -35,7 +36,8 @@ function Layout(props: { children: ReactNode, clickHandle?: (path: string) => vo
               onClick={() => setCollapsed(!collapsed)}
             />
           </Header>
-          <AntdLayout.Content className="p-24 my-16 mx-20" style={{ backgroundColor: colorBgContainer }}>
+          <Tabs emitRouteChange={clickHandle}/>
+          <AntdLayout.Content className="p-24 mx-20 my-16" style={{ backgroundColor: colorBgContainer }}>
             {props.children}
           </AntdLayout.Content>
         </AntdLayout>

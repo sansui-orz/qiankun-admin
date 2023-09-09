@@ -7,10 +7,9 @@ interface HeaderProps {
   children: ReactNode;
 }
 function Header(props: HeaderProps) {
-  
   const { token: { colorBgContainer } } = theme.useToken();
   return (
-    <AntdHeader className="header h-50 pl-10 flex items-center" style={{ background: colorBgContainer }}>
+    <AntdHeader className="flex items-center pl-10 header h-50" style={{ background: colorBgContainer }}>
       {props.children}
     </AntdHeader>
   )

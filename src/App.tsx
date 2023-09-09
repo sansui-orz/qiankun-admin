@@ -1,16 +1,30 @@
-import React from 'react'
-import { ConfigProvider } from 'antd';
-import Layout from '@/components/layout';
-import { RouterProvider } from 'react-router-dom';
-import './App.less'
-import router from './router/router';
+import React from "react";
+import { ConfigProvider } from "antd";
+import { RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
+import "./App.less";
+import router from "./router/router";
+import store from "@/store";
+
+const theme = {
+  components: {
+    Tabs: {
+      cardPaddingSM: "0 10px 0 4px",
+      cardBg: '#ffffff',
+      itemSelectedColor: '#ffffff'
+    },
+  },
+  token: { colorPrimary: "#00b96b" },
+};
 
 function App() {
   return (
-    <ConfigProvider theme={{ token: { colorPrimary: '#00b96b' } }}>
-      <RouterProvider router={router} />
-    </ConfigProvider>
-  )
+    <Provider store={store}>
+      <ConfigProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ConfigProvider>
+    </Provider>
+  );
 }
 
-export default App
+export default App;
