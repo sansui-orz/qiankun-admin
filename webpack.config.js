@@ -1,6 +1,7 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-console.log('process.env.mode => ', process.env.mode)
+const { ModuleFederationPlugin } = require('webpack').container
+// const dependencies = require(path.join(__dirname, './package.json')).dependencies;
 
 module.exports = {
   mode: process.env.mode || 'development',
@@ -8,15 +9,18 @@ module.exports = {
   output: {
     filename: 'index.js',
     clean: true,
+    publicPath: 'auto',
+    scriptType: 'text/javascript'
   },
   devServer: {
     hot: true,
     liveReload: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'OPTIONS, GET, PUT, POST, DELETE'
+    },
     port: 8000,
-    // historyApiFallback: true,
-    // static: {
-    //   publicPath: '/'
-    // }
+    allowedHosts: 'auto',
     historyApiFallback: {
       rewrites: [
         { from: /^\/[a-z_-]+\/.*/, to: (context) => {
@@ -27,6 +31,9 @@ module.exports = {
           return '/'
         } }
       ]
+    },
+    client: {
+      overlay: false
     }
   },
   module: {
@@ -56,12 +63,54 @@ module.exports = {
       '@': path.resolve(__dirname, './src')
     }
   },
+  experiments: {
+    outputModule: true,
+  },
+  externals: {
+    React: 'react',
+    ReactDom: 'react-dom',
+    ReactRouterDom: 'react-router-dom'
+  },
   plugins: [
     new HTMLWebpackPlugin({
-        template: path.resolve(__dirname, './src/index.html')
+        template: path.resolve(__dirname, './src/index.html'),
+        inject: 'body'
+    }),
+    // new ModuleFederationPlugin({
+    //   name: "main_hooks",
+    //   library: { type: 'module' },
+    //   filename: "remoteEntry.js",
+    //   exposes: {
+    //     "./useEvent": "./src/hooks/useEvent.ts",
+    //     "./useRouteChange": "./src/hooks/useRouteChange.ts"
+    //   },
+    //   // shared: {
+    //   //   react: {
+    //   //     singleton: true,
+    //   //     eager: true
+    //   //   },
+    //   //   'react-dom': {
+    //   //     singleton: true,
+    //   //     eager: true
+    //   //   },
+    //   //   'react-router-dom': {
+    //   //     singleton: true,
+    //   //     eager: true
+    //   //   }
+    //   // }
+    //   // shared: ['react', 'react-dom', 'react-router-dom']
+    // }),
+    new ModuleFederationPlugin({
+      name: "main_request",
+      library: { type: 'module' },
+      filename: "remoteEntry.js",
+      exposes: {
+        "./request": "./src/utils/request.ts"
+      },
+      shared: ['axios', 'js-cookie']
     })
   ],
   stats: {
-    errorDetails: true
+    errorDetails: false
   }
 };

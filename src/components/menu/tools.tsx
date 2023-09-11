@@ -46,12 +46,12 @@ export function getFirstMenu<T extends ApiMenuItem>(menus: MenuItem[] | T[]): st
   else return getFirstMenu(menus[0].children)
 }
 
-export function getTargetMenu(menus: MenuItem[], key: string): MenuItem | undefined {
+export function getTargetMenu<T extends ApiMenuItem>(menus: MenuItem[] | T[], key: string): MenuItem | T | undefined {
   for (let i = 0; i < menus.length; i++) {
-    if (menus[i]?.key === key) {
+    if ((menus[i] as MenuItem)?.key === key || (menus[i] as T)?.path === key) {
       return menus[i]
     } else if (menus[i]?.children) {
-      const result = getTargetMenu(menus[i]?.children!, key)
+      const result = getTargetMenu(menus[i]?.children!, key) as MenuItem | T
       if (result) return result
     }
   }

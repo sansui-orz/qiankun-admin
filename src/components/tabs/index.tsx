@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import { Tabs as AntdTabs } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '@/store'
+import store, { RootState } from '@/store'
 import { useEmit, useRouteChange } from '@/hooks'
 import { getFirstMenu } from '@/components/menu/tools'
 import './index.less'
@@ -16,7 +16,7 @@ function Tabs(props: PropsType) {
   const dispatch = useDispatch()
   useRouteChange(location => {
     if (location.pathname !== activePath) {
-      if (tabs.includes(location.pathname)) {
+      if (tabs.find(item => item.url === location.pathname)) {
         dispatch({ type: 'setActiveTab', value: location.pathname })
       } else {
         dispatch({ type: 'setActiveTab', value: '' })
@@ -30,10 +30,10 @@ function Tabs(props: PropsType) {
         const url = getFirstMenu(menus)
         props.emitRouteChange && props.emitRouteChange(url)
       } else if (targetKey === activePath) {
-        const index = tabs.findIndex(item => item === activePath)
+        const index = tabs.findIndex(item => item.url === activePath)
         const nextActivePath = tabs[index - 1] || tabs[index + 1] || ''
         dispatch({ type: 'setActiveTab', value: nextActivePath })
-        props.emitRouteChange && props.emitRouteChange(nextActivePath)
+        props.emitRouteChange && props.emitRouteChange(nextActivePath.url)
       }
       dispatch({ type: 'deleteTabs', value: targetKey })
       useEmit('removeTab', targetKey)
@@ -55,7 +55,7 @@ function Tabs(props: PropsType) {
       type="editable-card"
       onEdit={onEdit}
       size="small"
-      items={tabs.map(item => ({ label: item, children: item + 'children', key: item }))}
+      items={tabs.map(item => ({ label: item.name, children: item + 'children', key: item.url }))}
       onTabClick={onTabClick}
     />
   ) : null

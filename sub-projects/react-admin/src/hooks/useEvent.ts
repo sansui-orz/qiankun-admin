@@ -1,7 +1,7 @@
-import React from "react"
+import { useEffect } from "react"
 
-export function useEvent(name: string, callback: any) {
-  React.useEffect(() => {
+export function useEvent(name: string, callback: EventListener) {
+  useEffect(() => {
     window.addEventListener(name, callback, false)
     return () => {
       window.removeEventListener(name, callback, false)
@@ -9,10 +9,7 @@ export function useEvent(name: string, callback: any) {
   }, [])
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useEmit(name: string, value: any) {
   window.dispatchEvent(new CustomEvent(name, { detail: value }));
-}
-
-export function getReact() {
-  return React
 }

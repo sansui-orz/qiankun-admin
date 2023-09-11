@@ -1,12 +1,20 @@
 import { AnyAction } from '@reduxjs/toolkit'
+import { getTargetMenu } from '@/components/menu/tools'
+import store from '@/store'
+import { MenuItem } from '@/types/api';
+
+type addTabAction = { url: string; menus: MenuItem[] }
 
 export interface tabsActionType extends AnyAction {
   type: string;
-  value: string;
+  value: string | addTabAction;
 }
 
 const initState = {
-  tabs: [] as string[],
+  tabs: [] as Array<{
+    url: string;
+    name: string;
+  }>,
   activePath: ''
 }
 
@@ -16,17 +24,22 @@ const reducer = (state = initState, action: tabsActionType) => {
   const tabs = [...state.tabs]
   switch(action.type) {
     case 'addTabs':
-      if (!tabs.includes(action.value)) {
-        tabs.push(action.value)
-        return { ...state, tabs, activePath: action.value }
+      const { url, menus } = action.value as addTabAction
+      const targetMenu = getTargetMenu<MenuItem>(menus, url) as MenuItem
+      if (!tabs.find(item => item.url === url) && targetMenu) {
+        tabs.push({
+          url,
+          name: targetMenu.name
+        })
+        return { ...state, tabs, activePath: url }
       } else {
         return state
       }
     case 'setActiveTab':
-      return { ...state, activePath: action.value }
+      return { ...state, activePath: action.value as string }
     case 'deleteTabs':
-      if (tabs.includes(action.value)) {
-        const index = tabs.findIndex(tab => tab === action.value)
+      if (!tabs.find(item => item.url === action.value)) {
+        const index = tabs.findIndex(tab => tab.url === action.value)
         tabs.splice(index, 1)
         let activePath = state.activePath
         return { ...state, tabs, activePath }

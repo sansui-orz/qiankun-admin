@@ -1,3 +1,4 @@
+import { MenuItem } from '@/types/api';
 import store, { RootState } from './index'
 import { initGlobalState, MicroAppStateActions } from 'qiankun';
 
@@ -17,11 +18,15 @@ actions.getGlobalState = () => {
 }
 
 actions.dispatch = ({ type, value }) => {
-  console.log('dispatch ', type, value)
-  store.dispatch({ type, value })
-  Promise.resolve().then(() => {
-    actions.setGlobalState(store.getState())
-  })
+  if (type === 'addTabs') {
+    console.log('dispatch')
+    store.dispatch((dispatch, getState) => {
+        const menus: MenuItem[] = getState().menusState.menus
+        return dispatch!({ type, value: { url: value as string, menus } })
+    })
+  } else {
+    store.dispatch({ type, value })
+  }
 }
 // export type AppDispatch = typeof store.dispatch
 
