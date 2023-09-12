@@ -10,12 +10,19 @@ const theme = {
   components: {
     Tabs: {
       cardPaddingSM: "0 10px 0 4px",
-      cardBg: '#ffffff',
-      itemSelectedColor: '#ffffff',
-      horizontalMargin: '0px'
+      // cardBg: "#ffffff",
+      // itemSelectedColor: "#ffffff",
+      horizontalMargin: "0px",
     },
+    Button: {
+      defaultBg: '#00b96b',
+      colorPrimary: '#00b96b',
+      ghostBg: '#00b96b'
+    }
   },
-  token: { colorPrimary: "#00b96b" },
+  token: {
+    colorPrimary: "#00b96b",
+  },
 };
 
 function App() {

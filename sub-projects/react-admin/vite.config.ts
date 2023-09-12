@@ -52,7 +52,7 @@ export default defineConfig({
           format: 'module',
           from: 'webpack'
       },
-      shared: ['axios', 'js-cookie']
+      shared: ['axios']
     })
   ],
 })

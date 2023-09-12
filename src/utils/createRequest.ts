@@ -1,7 +1,7 @@
 // import axios, { AxiosResponse } from 'axios'
 // import Cookie from 'js-cookie'
 
-const TOKEN_NAME = 'TOKEN'
+export const TOKEN_NAME = 'TOKEN'
 
 export default function createRequest() {
   type AxiosResponse = import('axios').AxiosResponse
