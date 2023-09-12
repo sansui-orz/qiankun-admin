@@ -18,11 +18,11 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
 export function trasMenus(menus: RootState['menusState']['menus']): MenuItem[] {
   return menus.map(item => {
     return {
-      key: item.path || item.name,
+      key: item.url || item.name,
       label: item.name,
       type: undefined,
       icon: getMenuIcon(item.name),
-      url: item.path,
+      url: item.url,
       children: item.children ? trasMenus(item.children) : undefined
     }
   })
@@ -30,7 +30,7 @@ export function trasMenus(menus: RootState['menusState']['menus']): MenuItem[] {
 
 export function getActivePath<T extends ApiMenuItem>(menus: MenuItem[] | T[], activePath: string): string | undefined {
   for (let i = 0; i < menus.length; i++) {
-    const path = (menus[i] as T).path || (menus[i] as MenuItem).url
+    const path = menus[i].url
     if (path === activePath) {
       return path
     } else if (menus[i].children) {
@@ -42,13 +42,13 @@ export function getActivePath<T extends ApiMenuItem>(menus: MenuItem[] | T[], ac
 }
 
 export function getFirstMenu<T extends ApiMenuItem>(menus: MenuItem[] | T[]): string {
-  if (!menus[0].children) return (menus[0] as T).path || (menus[0] as MenuItem).url
+  if (!menus[0].children) return menus[0].url
   else return getFirstMenu(menus[0].children)
 }
 
 export function getTargetMenu<T extends ApiMenuItem>(menus: MenuItem[] | T[], key: string): MenuItem | T | undefined {
   for (let i = 0; i < menus.length; i++) {
-    if ((menus[i] as MenuItem)?.key === key || (menus[i] as T)?.path === key) {
+    if (menus[i].url === key) {
       return menus[i]
     } else if (menus[i]?.children) {
       const result = getTargetMenu(menus[i]?.children!, key) as MenuItem | T

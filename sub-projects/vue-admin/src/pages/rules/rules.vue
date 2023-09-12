@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
   import { useEmit } from '@/hooks/useEvent';
+  import { useLifeEventLog } from '@/hooks'
+  useLifeEventLog('rules')
   function onClick() {
     useEmit('removeTag', 'accounts')
   }

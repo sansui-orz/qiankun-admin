@@ -17,7 +17,6 @@ function init() {
     request.get<ConfigResponse>('/config').then((res) => {
     store.dispatch({ type: 'setUserInfo', value: res.data.userInfo })
     store.dispatch({ type: 'setMenus', value: res.data.rules.menus })
-    console.log('res => ', res)
     init()
   }).catch(err => {})
 } else {

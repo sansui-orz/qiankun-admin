@@ -12,7 +12,6 @@ function useTabsEvent() {
       const cache = keepAliveInstance?.value?._?.__v_cache
       for (let itemKey of cache.keys()) {
         if (itemKey.__name === event.detail.replace('/system/', '')) {
-          console.log('delete')
           cache.delete(itemKey)
           return
         }

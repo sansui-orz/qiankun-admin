@@ -3,27 +3,26 @@ import { qiankunWindow, renderWithQiankun, QiankunProps } from 'vite-plugin-qian
 import { RenderType } from './main'
 
 function qiankunInit(render: RenderType) {
-  let app: TypeApp | undefined = undefined
-  let skipStateChange = false
+  let app: TypeApp | undefined
+  let root: Element | undefined
+  // let skipStateChange = false
   if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
     render({});
   } else {
     renderWithQiankun({
       mount(props: QiankunProps) {
-        app = render({ ...props, setGlobalState: ({ type, value }) => {
-          switch(type) {
-            case 'addTabs':
-              props.actions.dispatch({ type, value: '/system/' + value })
-              return
-          }
-        } });
-        props.onGlobalStateChange((state: any, prev: any) => {
-          if (skipStateChange) {
-            console.log('当前子应用跳过的')
-          } else {
-            console.log('state ', state, prev)
-          }
-        })
+        if (!root) {
+          [root, app] = render({ ...props, setGlobalState: ({ type, value }) => {
+            switch(type) {
+              case 'addTabs':
+                props.actions.dispatch({ type, value: '/system/' + value })
+                return
+            }
+          } });
+        } else {
+          root!.setAttribute('display', 'block')
+          props.container?.parentNode?.appendChild(root!)
+        }
       },
       bootstrap() {
         console.log('--bootstrap');
@@ -32,11 +31,8 @@ function qiankunInit(render: RenderType) {
         console.log('--update');
       },
       unmount() {
-        console.log('unmount')
-        if (app) {
-          app.unmount()
-          app = undefined
-        }
+        root!.setAttribute('display', 'none')
+        document.body.appendChild<Element>(root!)
       }
     })
   }

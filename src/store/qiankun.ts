@@ -10,7 +10,6 @@ const actions: MicroAppStateActions & CustomActions = initGlobalState(store.getS
 
 actions.onGlobalStateChange((state, prev) => {
   // state: 变更后的状态; prev 变更前的状态
-  console.log('onGlobalStateChange', state, prev);
 });
 
 actions.getGlobalState = () => {
@@ -19,7 +18,6 @@ actions.getGlobalState = () => {
 
 actions.dispatch = ({ type, value }) => {
   if (type === 'addTabs') {
-    console.log('dispatch')
     store.dispatch((dispatch, getState) => {
         const menus: MenuItem[] = getState().menusState.menus
         return dispatch!({ type, value: { url: value as string, menus } })

@@ -1,6 +1,6 @@
 export type MenuItem = {
   name: string;
-  path: string;
+  url: string;
   children?: MenuItem[];
 }
 

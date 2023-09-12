@@ -1,23 +1,19 @@
 <script setup lang="ts">
-  import { onActivated, onDeactivated, onMounted, onUnmounted } from 'vue'
+  import { ref } from 'vue'
   import { RouterLink } from 'vue-router';
-  onMounted(() => {
-    console.log('onMounted')
-  })
-  onUnmounted(() => {
-    console.log('onUnmounted')
-  })
-  onActivated(() => {
-    console.log('onActivated')
-  })
-  onDeactivated(() => {
-    console.log('onDeactivated')
-  })
+  import { useLifeEventLog } from '@/hooks'
+  useLifeEventLog('accounts')
+  const count = ref(0)
+  function onClick() {
+    count.value += 1
+  }
 </script>
 
 <template>
   <div class="accounts-pages">
-    账号管理
+    账号管理<br/>
+    <div>{{count}}</div>
+    <button @click="onClick">+1</button>
     <br />
     <RouterLink :to="'/menus'">导航到菜单</RouterLink>
     <br />

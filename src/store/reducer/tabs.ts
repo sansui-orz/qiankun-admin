@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { getTargetMenu } from '@/components/menu/tools'
+import { getTargetMenu } from '@/components/layout/components/menu/tools'
 import store from '@/store'
 import { MenuItem } from '@/types/api';
 
@@ -38,7 +38,7 @@ const reducer = (state = initState, action: tabsActionType) => {
     case 'setActiveTab':
       return { ...state, activePath: action.value as string }
     case 'deleteTabs':
-      if (!tabs.find(item => item.url === action.value)) {
+      if (tabs.find(item => item.url === action.value)) {
         const index = tabs.findIndex(tab => tab.url === action.value)
         tabs.splice(index, 1)
         let activePath = state.activePath

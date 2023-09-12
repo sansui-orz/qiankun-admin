@@ -9,7 +9,6 @@ export function useEvent(name: string, callback: EventListener) {
   }, [])
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useEmit(name: string, value: any) {
   window.dispatchEvent(new CustomEvent(name, { detail: value }));
 }

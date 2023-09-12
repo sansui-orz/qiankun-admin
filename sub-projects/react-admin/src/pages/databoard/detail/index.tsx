@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useAliveController } from 'react-activation'
+import { useLifeEventLog } from '@/hooks'
 
 import './index.less'
 
@@ -10,6 +11,7 @@ function DataboardDetail() {
   const onClick = () => {
     drop('/databoard')
   }
+  useLifeEventLog('databoard-detail')
   return (
     <div className="databoard-detail">
       databoard detail.<br />

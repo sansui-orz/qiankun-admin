@@ -2,9 +2,9 @@ import React, { useState, ReactNode, useCallback } from 'react'
 import { Layout as AntdLayout, Button, theme } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom'
-import Header from '@/components/header'
-import Menu from '@/components/menu'
-import Tabs from '@/components/tabs'
+import Header from './components/header'
+import Menu from './components/menu'
+import Tabs from './components/tabs'
 
 
 function Layout(props: { children: ReactNode, clickHandle?: (path: string) => void }) {

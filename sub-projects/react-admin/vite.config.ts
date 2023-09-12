@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite'
-// import react from '@vitejs/plugin-react'
 import path from 'path'
 import qiankun from 'vite-plugin-qiankun'
 import federation from "@originjs/vite-plugin-federation";
@@ -37,7 +36,6 @@ export default defineConfig({
     },
   },
   plugins: [
-    // react(),
     qiankun('reac18', {
       useDevMode: true
     }),
@@ -55,19 +53,6 @@ export default defineConfig({
           from: 'webpack'
       },
       shared: ['axios', 'js-cookie']
-      // shared: {
-      //   react: {
-      //     shareScope: 'react',
-      //     requiredVersion: '18.2.0',
-      //   },
-      //   'react-dom': {
-      //     shareScope: 'react-dom',
-      //     requiredVersion: '18.2.0',
-      //   },
-      //   'react-router-dom': {
-      //     shareScope: 'react-router-dom',
-      //   }
-      // }
     })
   ],
 })

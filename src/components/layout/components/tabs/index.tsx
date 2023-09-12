@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react'
 import { Tabs as AntdTabs } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
-import store, { RootState } from '@/store'
+import { RootState } from '@/store'
 import { useEmit, useRouteChange } from '@/hooks'
-import { getFirstMenu } from '@/components/menu/tools'
+import { getFirstMenu } from '@/components/layout/components/menu/tools'
 import './index.less'
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
@@ -27,7 +27,8 @@ function Tabs(props: PropsType) {
   const onEdit = useCallback((targetKey: TargetKey, action: 'add' | 'remove') => {
     if (action === 'remove') {
       if (tabs.length === 1) {
-        const url = getFirstMenu(menus)
+        let url = getFirstMenu(menus)
+        url = url === targetKey ? '/' : url
         props.emitRouteChange && props.emitRouteChange(url)
       } else if (targetKey === activePath) {
         const index = tabs.findIndex(item => item.url === activePath)

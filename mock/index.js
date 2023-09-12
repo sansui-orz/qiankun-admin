@@ -22,37 +22,37 @@ router.get('/config', ctx => {
         menus: [
           {
             name: '数据中心',
-            path: '',
+            url: '',
             children: [
               {
                 name: '数据看板',
-                path: '/databoard'
+                url: '/databoard'
               },
               {
                 name: '数据详情',
-                path: '/databoard/detail'
+                url: '/databoard/detail'
               },
               {
                 name: '数据表格',
-                path: '/databoard/data-table'
+                url: '/databoard/data-table'
               }
             ]
           },
           {
             name: '系统管理',
-            path: '',
+            url: '',
             children: [
               {
                 name: '账号管理',
-                path: '/system/accounts',
+                url: '/system/accounts',
               },
               {
                 name: '角色管理',
-                path: '/system/rules'
+                url: '/system/rules'
               },
               {
                 name: '菜单管理',
-                path: '/system/menus'
+                url: '/system/menus'
               }
             ]
           }

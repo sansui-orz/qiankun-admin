@@ -1,6 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit'
 import { MenuItem } from '@/types/api'
-import { getActivePath, getFirstMenu } from '@/components/menu/tools'
+import { getActivePath, getFirstMenu } from '@/components/layout/components/menu/tools'
 export interface menusActionType extends AnyAction {
   type: string;
   value: MenuItem[] | string;
