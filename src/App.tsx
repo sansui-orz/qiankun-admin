@@ -11,7 +11,7 @@ const theme = {
     Tabs: {
       cardPaddingSM: "0 10px 0 4px",
       // cardBg: "#ffffff",
-      // itemSelectedColor: "#ffffff",
+      itemSelectedColor: "#ffffff",
       horizontalMargin: "0px",
     },
     Button: {

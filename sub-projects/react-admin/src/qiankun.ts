@@ -1,6 +1,5 @@
 import { qiankunWindow, renderWithQiankun, QiankunProps } from 'vite-plugin-qiankun/dist/helper';
 import { RenderType } from './main'
-
 export default function qiankunInit(render: RenderType) {
   if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
     render({})

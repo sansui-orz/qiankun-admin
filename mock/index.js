@@ -1,68 +1,41 @@
 const Koa = require('koa');
+const cors = require('koa-cors')
+const { koaBody } = require('koa-body')
 const router = require('koa-router')();
 const app = new Koa();
 
-app.use(async (ctx, next) => {
-  ctx.set('Access-Control-Allow-Origin', '*')
-  ctx.set('Access-Control-Allow-Methods', 'OPTIONS, GET, PUT, POST, DELETE')
-  await next()
-})
+app.use(cors({
+  origin: () => '*',
+  maxAge: 10,
+  credentials: true,
+  allowedMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'x-token']
+}))
 
-// 获取用户基础信息
-router.get('/config', ctx => {
-  ctx.body = {
-    code: 200,
-    data: {
-      userInfo: {
-        username: '蜘蛛侠',
-        account: '123456@gmail.com',
-        avatar: 'https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/leancloud-assets/WBsXGwMQAYW0ST9paXKIEoD~tplv-t2oaga2asx-jj-mark:36:36:0:0:q75.avis'
-      },
-      rules: {
-        menus: [
-          {
-            name: '数据中心',
-            url: '',
-            children: [
-              {
-                name: '数据看板',
-                url: '/databoard'
-              },
-              {
-                name: '数据详情',
-                url: '/databoard/detail'
-              },
-              {
-                name: '数据表格',
-                url: '/databoard/data-table'
-              }
-            ]
-          },
-          {
-            name: '系统管理',
-            url: '',
-            children: [
-              {
-                name: '账号管理',
-                url: '/system/accounts',
-              },
-              {
-                name: '角色管理',
-                url: '/system/rules'
-              },
-              {
-                name: '菜单管理',
-                url: '/system/menus'
-              }
-            ]
-          }
-        ]
-      }
+app.use(koaBody());
+
+app.use((ctx, next) => {
+  // 检查登录状态
+  if (ctx.url === '/login' || ctx.url === '/signup') {
+    next()
+  } else {
+    if (ctx.request.headers['x-token']) {
+      // TODO: 检查登录是否过期
+      next()
+    } else {
+      ctx.response.status = 403
     }
   }
 })
 
-app.use(router.routes(), router.allowedMethods());
+// 获取用户基础信息
+require('./routers/config')(router)
+require('./routers/login')(router)
+require('./routers/signup')(router)
+require('./routers/panel')(router)
+
+app.use(router.routes())
+app.use(router.allowedMethods());
 
 app.listen(7999, () => {
   console.log('Mock server run on port: 7999.')

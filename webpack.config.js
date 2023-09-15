@@ -9,7 +9,7 @@ module.exports = {
   output: {
     filename: "index.js",
     clean: true,
-    publicPath: "auto",
+    publicPath: "http://localhost:8000/",
     scriptType: "text/javascript",
   },
   devServer: {
