@@ -3,6 +3,13 @@ import { AliveScope } from 'react-activation'
 import SetMainStateContext from '@/hooks/context/setGlobalState'
 import { ConfigProvider } from "antd";
 
+import dayjs from 'dayjs';
+// import enUS from 'antd/locale/en_US';
+import zhCN from 'antd/locale/zh_CN';
+import 'dayjs/locale/zh-cn';
+
+dayjs.locale('zh-cn');// 'en'
+
 import './App.less'
 
 const theme = {
@@ -36,7 +43,7 @@ function App(props: AppProps) {
 
   return (
     <div className="react-app">
-      <ConfigProvider theme={theme}>
+      <ConfigProvider theme={theme} locale={zhCN}>
         <SetMainStateContext.Provider value={{ setGlobalState }}>
           <AliveScope>
             { props.children }

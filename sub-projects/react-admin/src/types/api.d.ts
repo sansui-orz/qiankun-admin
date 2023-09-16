@@ -25,3 +25,14 @@ export interface PanelData {
   uv?: number;
   store?: Array<{ name: string; value: string }>;
 }
+
+export interface ChartDetail {
+  legend: string[];
+  xAxis: string[];
+  series: Array<{
+    data: string;
+    name: string;
+    stock: string;
+    type: string;
+  }>
+}

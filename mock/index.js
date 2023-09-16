@@ -33,6 +33,7 @@ require('./routers/config')(router)
 require('./routers/login')(router)
 require('./routers/signup')(router)
 require('./routers/panel')(router)
+require('./routers/chartDetail')(router)
 
 app.use(router.routes())
 app.use(router.allowedMethods());

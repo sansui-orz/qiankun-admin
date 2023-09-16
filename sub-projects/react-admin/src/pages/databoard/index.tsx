@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import "./index.less";
 import { Col, Row } from "antd";
-
 import TodoList from "./components/todoList";
 import Records from "./components/record";
 import Notice from "./components/notice";

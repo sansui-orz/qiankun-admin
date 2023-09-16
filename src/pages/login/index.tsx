@@ -14,8 +14,6 @@ import "./index.less";
 
 const banners = [banner1, banner2, banner3, banner4, banner5, banner6, banner7];
 
-const day = new Date().getDay();
-
 export default function LoginSignup() {
   const onLoginSubmit = useCallback<LoginSubmitType>(() => {}, []);
   const onSignupSubmit = useCallback<SignupSubmitType>(() => {}, []);
@@ -34,7 +32,6 @@ export default function LoginSignup() {
     ],
     []
   );
-  console.log("day", day);
   return (
     <div
       className="flex items-center justify-center w-full h-full login-page"
@@ -50,8 +47,7 @@ export default function LoginSignup() {
               backgroundImage: `url(${banners[4]})`,
               borderRadius: "8px 8px 0 0",
             }}
-          >
-          </div>
+          ></div>
         }
       >
         <Tabs defaultActiveKey="login" items={items} />

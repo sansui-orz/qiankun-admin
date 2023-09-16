@@ -17,4 +17,15 @@ export function loadingHoc(component: JSX.Element, isLoading: boolean, style: an
   }
 }
 
+export function LoadingContainer(props: { children: JSX.Element; isLoading: boolean; }) {
+  return (
+    <div className="loading-container relative">
+      {props.isLoading ? <div className="loading absolute w-full h-full top-0 left-0">
+        <Spin indicator={antIcon} />
+      </div> : null}
+      {props.children}
+    </div>
+  )
+}
+
 export default Loading;

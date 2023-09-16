@@ -1,76 +1,81 @@
-import { useLifeEventLog } from "@/hooks";
-import {
-  Card,
-  Form,
-  DatePicker,
-  Button,
-  Checkbox,
-  Switch,
-  Row,
-  Col,
-} from "antd";
+import { useRef, useEffect, useCallback, useState } from "react";
+import { Card } from "antd";
+import * as echarts from "echarts/core";
+import Search, { SearchValues, IRefProps } from "./components/search";
+import request from "main_request/request";
+import { LoadingContainer } from "@/comonents/loading";
+import { ChartDetail } from '@/types/api';
 
 import "./index.less";
 
-const { RangePicker } = DatePicker;
-const CheckboxGroup = Checkbox.Group;
-
-const config = {
-  rules: [
-    { type: "object" as const, required: true, message: "Please select time!" },
-  ],
-};
-const plainOptions = [
-  { value: "sale", label: "销售额" },
-  { value: "profit", label: "净利润" },
-  { value: "order", label: "订单数" },
-  { value: "uv", label: "流量" },
-  { value: "conversionRate", label: "转化率" },
-  { value: "return", label: "退货率" },
-];
-
-const onFinish = (fieldsValue: any) => {
-  console.log("fieldsValue", fieldsValue);
-};
-const onFinishFailed = (errorInfo: any) => {
-  console.log('Failed:', errorInfo);
-};
 function DataboardDetail() {
-  useLifeEventLog("databoard-detail");
+  const chart = useRef<HTMLDivElement>(null);
+  const search = useRef<IRefProps>(null);
+  const [loading, setLoading] = useState(true)
+  const saleChartRef = useRef<echarts.ECharts | null>(null)
+  const chartInit = useCallback((charts: string[], dateRange: string[], series: ChartDetail['series']) => {
+    // 绘制图表
+    saleChartRef.current!.clear()
+    saleChartRef.current!.setOption({
+      title: {
+        text: "数据详情图表",
+      },
+      tooltip: {
+        trigger: "axis",
+      },
+      legend: {
+        orient: "horizontal",
+        bottom: 0,
+        data: charts,
+      },
+      grid: {
+        left: "3%",
+        right: "4%",
+        bottom: "10%",
+        containLabel: true,
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {},
+        },
+      },
+      xAxis: {
+        type: "category",
+        boundaryGap: false,
+        data: dateRange,
+      },
+      yAxis: {
+        type: "value",
+      },
+      series: series
+    });
+  }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      saleChartRef.current = echarts.init(chart.current);
+      search.current!.search();
+    }, 200);
+  }, []);
   return (
     <div className="databoard-detail">
-      <Card>
-        <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
-          <Form.Item name="check-chart" label="图表选择" rules={[{ required: true, message: '请选择一个图表' }]}>
-            <CheckboxGroup options={plainOptions} />
-          </Form.Item>
-          <Form.Item name="date-range" label="日期范围" {...config}>
-            <RangePicker />
-          </Form.Item>
-          <Row>
-            <Col span="20">
-              <Form.Item
-                name="merge-chart"
-                label="&nbsp;&nbsp;&nbsp;合并图表"
-                valuePropName="checked"
-              >
-                <Switch defaultChecked />
-              </Form.Item>
-            </Col>
-            <Col span="4">
-              <Form.Item
-                wrapperCol={{
-                  xs: { span: 24, offset: 0 },
-                  sm: { span: 16, offset: 8 },
-                }}
-              >
-                <Button type="primary" htmlType="submit">
-                  确定
-                </Button>
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
+      <Search
+        ref={search}
+        onSearch={(values: SearchValues) => {
+          request.get<ChartDetail>('/chart-detail', {
+            params: {
+              charts: values.charts,
+              dateRange: values.dateRange
+            }
+          }).then(res => {
+            chartInit(res.data.legend, res.data.xAxis, res.data.series);
+            setLoading(false)
+          })
+        }}
+      />
+      <Card className="mt-20">
+        <LoadingContainer isLoading={loading}>
+          <div className="w-full h-500" ref={chart}></div>
+        </LoadingContainer>
       </Card>
     </div>
   );

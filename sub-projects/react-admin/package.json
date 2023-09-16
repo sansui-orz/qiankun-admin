@@ -12,6 +12,7 @@
   "dependencies": {
     "antd": "^5.9.0",
     "axios": "^1.5.0",
+    "dayjs": "^1.11.9",
     "echarts": "^5.4.3",
     "js-cookie": "^3.0.5",
     "localforage": "^1.10.0",
