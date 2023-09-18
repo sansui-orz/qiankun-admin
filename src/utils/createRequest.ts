@@ -53,8 +53,18 @@ export default function createRequest() {
       const instance = await init();
       return instance.post(...args);
     },
+    put: async (...args) => {
+      const instance = await init();
+      return instance.put(...args);
+    },
+    del: async (...args) => {
+      const instance = await init();
+      return instance.delete(...args);
+    },
   } as {
     get: AxiosInstance["get"];
     post: AxiosInstance["post"];
+    put: AxiosInstance["put"];
+    del: AxiosInstance["delete"];
   };
 }

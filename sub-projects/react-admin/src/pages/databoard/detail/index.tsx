@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback, useState } from "react";
 import { Card } from "antd";
 import * as echarts from "echarts/core";
 import Search, { SearchValues, IRefProps } from "./components/search";
-import request from "main_request/request";
+import request from "main_request_react/request";
 import { LoadingContainer } from "@/comonents/loading";
 import { ChartDetail } from '@/types/api';
 

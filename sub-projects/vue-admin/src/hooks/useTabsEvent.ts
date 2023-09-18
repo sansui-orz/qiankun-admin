@@ -22,7 +22,7 @@ function useTabsEvent() {
     const pathname = window.location.pathname.replace(/^\/system/, '')
     for (let item of routes) {
       if (item.path === pathname && item.meta?.keepAliveName) {
-        setGlobalState({ type: 'addTabs', value: item.meta?.keepAliveName })
+        setGlobalState && setGlobalState({ type: 'addTabs', value: item.meta?.keepAliveName })
         return
       }
     }

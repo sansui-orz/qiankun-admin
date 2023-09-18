@@ -48,7 +48,7 @@ export default defineConfig({
       name: 'react-admin',
       remoteType: 'module',
       remotes: {
-          main_request: "http://localhost:8000/remoteEntry.js",
+          main_request_react: "http://localhost:8000/remoteEntryForReact.js",
           format: 'module',
           from: 'webpack'
       },

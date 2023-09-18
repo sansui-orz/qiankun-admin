@@ -88,34 +88,19 @@ module.exports = {
       template: path.resolve(__dirname, "./src/index.html"),
       inject: "body",
     }),
-    // new ModuleFederationPlugin({
-    //   name: "main_hooks",
-    //   library: { type: 'module' },
-    //   filename: "remoteEntry.js",
-    //   exposes: {
-    //     "./useEvent": "./src/hooks/useEvent.ts",
-    //     "./useRouteChange": "./src/hooks/useRouteChange.ts"
-    //   },
-    //   // shared: {
-    //   //   react: {
-    //   //     singleton: true,
-    //   //     eager: true
-    //   //   },
-    //   //   'react-dom': {
-    //   //     singleton: true,
-    //   //     eager: true
-    //   //   },
-    //   //   'react-router-dom': {
-    //   //     singleton: true,
-    //   //     eager: true
-    //   //   }
-    //   // }
-    //   // shared: ['react', 'react-dom', 'react-router-dom']
-    // }),
     new ModuleFederationPlugin({
-      name: "main_request",
+      name: "main_request_react",
       library: { type: "module" },
-      filename: "remoteEntry.js",
+      filename: "remoteEntryForReact.js",
+      exposes: {
+        "./request": "./src/utils/request.ts",
+      },
+      shared: ["axios"],
+    }),
+    new ModuleFederationPlugin({
+      name: "main_request_vue",
+      library: { type: "module" },
+      filename: "remoteEntryForVue.js",
       exposes: {
         "./request": "./src/utils/request.ts",
       },

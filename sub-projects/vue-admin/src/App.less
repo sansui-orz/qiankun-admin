@@ -1,0 +1,21 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "@/assets/base/variable.less";
+
+@layer base {
+  /* 因为twilwindcss 3增加了一个透明色的默认色 https://github.com/tailwindlabs/tailwindcss/issues/6602 */
+  button, [type='button'], [type='reset'] {
+    background-color: #ffffff;
+  }
+  [type='submit'], button.ant-btn-primary {
+      background-color: @buttonDefaultColor;
+  }
+}
+button.ant-btn-text:not(.ant-btn-dangerous)>span:not(.ant-btn-icon) {
+  background-color: transparent;
+  color: @buttonDefaultColor;
+}
+.ant-switch {
+  background-color: rgba(0, 0, 0, 0.25);
+}

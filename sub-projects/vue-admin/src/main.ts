@@ -1,8 +1,9 @@
 import { createApp, App as TypeApp } from 'vue'
-import './style.css'
+import "normalize.css";
 import App from './App.vue'
 import Router from '@/router/router'
 import qiankunInit from './qiankun'
+import pinia from '@/store/index'
 
 type RenderProps = {
   container?: HTMLElement;
@@ -16,7 +17,7 @@ function render(props: RenderProps): [Element, TypeApp] {
   if (props.setGlobalState) {
     app.provide('setGlobalState', props.setGlobalState)
   }
-  app.use(Router).mount(root!)
+  app.use(Router).use(pinia).mount(root!)
   return [root!, app]
 }
 export type RenderType = typeof render

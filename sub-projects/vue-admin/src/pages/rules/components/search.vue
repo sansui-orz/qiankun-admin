@@ -1,0 +1,94 @@
+<script setup lang="ts">
+import { reactive, defineProps, defineEmits, defineExpose, toRaw } from "vue";
+import {
+  Card,
+  Form,
+  Row,
+  Col,
+  FormItem,
+  Select,
+  SelectOption,
+  Input,
+  Button,
+} from "ant-design-vue";
+
+defineExpose({
+  getSearchValues() {
+    return toRaw(formState)
+  }
+})
+
+const props = defineProps<{ initState?: SearchStateType; loading?: boolean }>();
+
+const emit = defineEmits<{
+  search: [values: SearchStateType];
+  create: [];
+}>();
+
+const formState = reactive<SearchStateType>(
+  props.initState || {
+    menus: [],
+    buttons: [],
+    name: "",
+  }
+);
+
+const onFinish = (values: SearchStateType) => {
+  emit("search", values);
+};
+
+const create = () => {
+  emit('create');
+};
+</script>
+<script lang="ts">
+export type SearchStateType = {
+  menus: number[];
+  buttons: number[];
+  name: string;
+};
+</script>
+<template>
+  <div class="menus-search">
+    <Card>
+      <Form name="searchForm" :model="formState" @finish="onFinish">
+        <Row :gutter="20">
+          <Col :span="6">
+            <FormItem name="name" label="角色名称">
+              <Input v-model:value="formState.name" />
+            </FormItem>
+          </Col>
+          <Col :span="6">
+            <FormItem name="menus" label="目录权限">
+              <Select v-model:value="formState.menus" :max-tag-count="1" mode="multiple" allow-clear>
+                <SelectOption :value="11">数据看板</SelectOption>
+                <SelectOption :value="12">数据详情</SelectOption>
+                <SelectOption :value="13">数据表格</SelectOption>
+                <SelectOption :value="21">账号管理</SelectOption>
+                <SelectOption :value="22">角色管理</SelectOption>
+                <SelectOption :value="23">菜单管理</SelectOption>
+              </Select>
+            </FormItem>
+          </Col>
+          <Col :span="6">
+            <FormItem name="buttons" label="按钮权限">
+              <Select v-model:value="formState.buttons" :max-tag-count="1" mode="multiple" allow-clear>
+                <SelectOption :value="1">删除账号</SelectOption>
+                <SelectOption :value="2">删除角色</SelectOption>
+                <SelectOption :value="3">创建账号</SelectOption>
+              </Select>
+            </FormItem>
+          </Col>
+        </Row>
+        <div className="flex">
+          <div className="grow">
+            <Button type="primary" @click="create">创建角色</Button>
+          </div>
+          <Button type="primary" html-type="submit" :loading="props.loading">搜索</Button>
+        </div>
+      </Form>
+    </Card>
+  </div>
+</template>
+
+<style scoped lang="less"></style>
