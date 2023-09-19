@@ -25,7 +25,21 @@ function qiankunInit() {
         store: connect(['userState'])
       }
     },
-  ]);
+  ], {
+    // @ts-ignore
+    beforeLoad: (app) => {
+      console.log('beforeLoad', app.name)
+      const loading = document.getElementById('main-loading')
+      loading?.setAttribute('style', 'display:flex;')
+    },
+    
+    // @ts-ignore
+    afterMount : (app) => {
+      console.log('beforeLoad', app.name)
+      const loading = document.getElementById('main-loading')
+      loading?.setAttribute('style', 'display:none;')
+    }
+  });
   
   start();
 }

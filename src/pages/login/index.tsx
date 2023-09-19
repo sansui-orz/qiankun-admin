@@ -10,6 +10,7 @@ import banner4 from "@/assets/images/banner/banner4.png";
 import banner5 from "@/assets/images/banner/banner5.png";
 import banner6 from "@/assets/images/banner/banner6.png";
 import banner7 from "@/assets/images/banner/banner7.png";
+import logo from '@/assets/images/logo.png';
 import "./index.less";
 
 const banners = [banner1, banner2, banner3, banner4, banner5, banner6, banner7];
@@ -42,12 +43,15 @@ export default function LoginSignup() {
         style={{ width: 600 }}
         cover={
           <div
-            className="w-full bg-center bg-no-repeat bg-cover h-200"
+            className="relative w-full bg-center bg-no-repeat bg-cover h-200"
             style={{
               backgroundImage: `url(${banners[4]})`,
               borderRadius: "8px 8px 0 0",
             }}
-          ></div>
+          >
+            <div className="blur"></div>
+            <img className="login-logo" src={logo} />
+          </div>
         }
       >
         <Tabs defaultActiveKey="login" items={items} />

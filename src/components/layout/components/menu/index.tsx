@@ -5,6 +5,7 @@ import { RootState } from '@/store'
 import type { MenuClickEventHandler } from 'rc-menu/lib/interface'
 import { trasMenus, getTargetMenu, getActivePath, MenuItem } from './tools'
 import { useRouteChange } from '@/hooks';
+import logo from '@/assets/images/logo.png'
 import './index.less'
 const { Sider } = Layout
 
@@ -58,7 +59,10 @@ function Menu(props: iMenuProps) {
       props.setCollapsed(broken)
     }}
   >
-    <div className="system-logo">logo</div>
+    <div className="flex items-center justify-center py-10 overflow-hidden system-logo flex-nowrap">
+      <img className="w-40 shrink-0" src={logo} />
+      {!collapsed ? <span className="ml-10 text-white whitespace-nowrap">微前端管理系统</span> : null}
+    </div>
     <AntdMenu
       theme="dark"
       onClick={onClick}

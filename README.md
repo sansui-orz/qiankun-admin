@@ -1,3 +1,4 @@
+![logo](./src/assets/images/logo.png)
 # qiankun-admin
 
 qiankun-admin是一个免费开源的中后台模版。使用了最新的`qiankun`, `Vue3`, `Webpack5`, `Vite4`, `React18`, `TypeScript`等主流技术框架，开箱即用的中后台前端解决方案。

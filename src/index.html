@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>微前端后台管理系统架构</title>
+    <title>微前端管理系统</title>
+    <style>
+        #app-loading {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-size: 14px;
+        }
+        #app-loading img {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
+    <div id="app-loading">
+        <img src="https://lms-flies.oss-cn-guangzhou.aliyuncs.com/qiankun-admin/logo.png" />
+        <span>Loading...</span>
+    </div>
     <div id="app"></div>
     <script src="https://cdn.bootcdn.net/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>

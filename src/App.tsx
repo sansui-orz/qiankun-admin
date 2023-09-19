@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ConfigProvider } from "antd";
 import { RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -26,6 +26,10 @@ const theme = {
 };
 
 function App() {
+  useEffect(() => {
+    const loading = document.getElementById('app-loading')
+    if (loading) document.body.removeChild(loading)
+  }, [])
   return (
     <Provider store={store}>
       <ConfigProvider theme={theme}>

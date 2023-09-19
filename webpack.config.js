@@ -11,6 +11,7 @@ module.exports = {
     clean: true,
     publicPath: "http://localhost:8000/",
     scriptType: "text/javascript",
+    assetModuleFilename: "assets/[name]_[hash][ext]",
   },
   devServer: {
     hot: true,
@@ -87,6 +88,8 @@ module.exports = {
     new HTMLWebpackPlugin({
       template: path.resolve(__dirname, "./src/index.html"),
       inject: "body",
+      favicon: 'https://lms-flies.oss-cn-guangzhou.aliyuncs.com/qiankun-admin/logo.ico', // path.resolve(__dirname, './src/assets/images/logo.ico'),
+      publicPath: './'
     }),
     new ModuleFederationPlugin({
       name: "main_request_react",
