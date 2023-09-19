@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineExpose, reactive, toRaw } from "vue";
+import { ref, defineExpose, reactive, toRaw, onMounted } from "vue";
 import {
   Modal,
   Form,
@@ -12,6 +12,7 @@ import {
   message
 } from "ant-design-vue";
 import request from "main_request_vue/request";
+import { useOptionsStore } from '@/store/options'
 
 defineExpose({
   show: (
@@ -35,6 +36,11 @@ defineExpose({
 const emit = defineEmits<{
   refresh: [];
 }>();
+
+const options = useOptionsStore()
+onMounted(() => {
+  options.getSystemOptions()
+})
 
 const show = ref(false);
 const isCreate = ref(true);
@@ -127,8 +133,7 @@ const parentMenus = {
     >
       <FormItem label="所属系统" name="systemId">
         <Select v-model:value="(formState.systemId as number)" disabled>
-          <SelectOption :value="1">数据系统</SelectOption>
-          <SelectOption :value="2">权限系统</SelectOption>
+          <SelectOption v-for="item in options.systemOptions" :key="item.value" :value="item.value">{{ item.name }}</SelectOption>
         </Select>
       </FormItem>
       <FormItem v-if="formState.parentId" label="父级目录" name="parentId">

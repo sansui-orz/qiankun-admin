@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, defineProps, defineEmits, ref, toRaw } from "vue";
+import { reactive, defineProps, defineEmits, ref, toRaw, onMounted } from "vue";
 import {
   Card,
   Form,
@@ -12,11 +12,17 @@ import {
   Button,
 } from "ant-design-vue";
 import CreateSystem from './createSystem.vue'
+import { useOptionsStore } from '@/store/options'
 
 defineExpose({
   getSearchValues() {
     return toRaw(formState)
   }
+})
+
+const options = useOptionsStore()
+onMounted(() => {
+  options.getSystemOptions()
 })
 
 const createSystemRef = ref<InstanceType<typeof CreateSystem> | null>()
@@ -57,8 +63,7 @@ export type SearchStateType = {
           <Col :span="6">
             <FormItem name="system" label="系统名称">
               <Select v-model:value="formState.system" allow-clear>
-                <SelectOption value="data">数据系统</SelectOption>
-                <SelectOption value="authority">权限系统</SelectOption>
+                <SelectOption v-for="item in options.systemOptions" :key="item.value" :value="item.value">{{ item.name }}</SelectOption>
               </Select>
             </FormItem>
           </Col>

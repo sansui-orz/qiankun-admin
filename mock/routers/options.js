@@ -29,8 +29,8 @@ module.exports = function config(router) {
     ctx.body = {
       code: 200,
       data: [
-        { value: "data", name: "数据系统" },
-        { value: "authority", name: "权限系统" },
+        { value: 1, name: "数据系统" },
+        { value: 2, name: "权限系统" },
       ]
     }
   })

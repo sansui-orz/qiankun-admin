@@ -3,7 +3,7 @@ import "normalize.css";
 import App from './App.vue'
 import Router from '@/router/router'
 import qiankunInit from './qiankun'
-import pinia from '@/store/index'
+import { createPinia } from 'pinia'
 
 type RenderProps = {
   container?: HTMLElement;
@@ -17,7 +17,7 @@ function render(props: RenderProps): [Element, TypeApp] {
   if (props.setGlobalState) {
     app.provide('setGlobalState', props.setGlobalState)
   }
-  app.use(Router).use(pinia).mount(root!)
+  app.use(Router).use(createPinia()).mount(root!)
   return [root!, app]
 }
 export type RenderType = typeof render

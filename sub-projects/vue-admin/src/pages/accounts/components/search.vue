@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, defineProps, defineEmits, defineExpose, toRaw } from "vue";
+import { reactive, defineProps, defineEmits, defineExpose, toRaw, onMounted } from "vue";
 import {
   Card,
   Form,
@@ -11,6 +11,7 @@ import {
   Input,
   Button,
 } from "ant-design-vue";
+import { useOptionsStore } from '@/store/options'
 
 defineExpose({
   getSearchValues() {
@@ -24,6 +25,11 @@ const emit = defineEmits<{
   search: [values: SearchStateType];
   create: [];
 }>();
+
+const options = useOptionsStore()
+onMounted(() => {
+  options.getRuleOptions()
+})
 
 const formState = reactive<SearchStateType>(
   props.initState || {
@@ -68,12 +74,7 @@ export type SearchStateType = {
           <Col :span="6">
             <FormItem name="rules" label="包含角色">
               <Select v-model:value="formState.rules" :max-tag-count="1" mode="multiple" allow-clear>
-                <SelectOption value="admin">系统管理员</SelectOption>
-                <SelectOption value="buyer-admin">买手主管</SelectOption>
-                <SelectOption value="buyer">买手</SelectOption>
-                <SelectOption value="salesman-admin">业务主管</SelectOption>
-                <SelectOption value="salesman">业务员</SelectOption>
-                <SelectOption value="developer">开发人员</SelectOption>
+                <SelectOption v-for="item in options.ruleOptions" :value="item.value" :key="item.value">{{ item.name }}</SelectOption>
               </Select>
             </FormItem>
           </Col>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, defineExpose, defineEmits, toRaw } from "vue";
+import { ref, defineExpose, defineEmits, toRaw, onMounted } from "vue";
 import { Modal, Form, FormItem, Input, Select, SelectOption, message } from "ant-design-vue";
 import request from "main_request_vue/request";
+import { useOptionsStore } from '@/store/options'
 
 defineExpose({
   show: (state: AccountType | undefined, create: boolean) => {
@@ -21,6 +22,11 @@ defineExpose({
 const emit = defineEmits<{
   refresh: [];
 }>();
+
+const options = useOptionsStore()
+onMounted(() => {
+  options.getRuleOptions()
+})
 
 const defaultState = {
   id: undefined,
@@ -107,12 +113,7 @@ export type AccountType = {
       </FormItem>
       <FormItem label="用户权限" name="rules">
         <Select v-model:value="formState.rules" mode="multiple" allow-clear>
-          <SelectOption value="admin">系统管理员</SelectOption>
-          <SelectOption value="buyer-admin">买手主管</SelectOption>
-          <SelectOption value="buyer">买手</SelectOption>
-          <SelectOption value="salesman-admin">业务主管</SelectOption>
-          <SelectOption value="salesman">业务员</SelectOption>
-          <SelectOption value="developer">开发人员</SelectOption>
+          <SelectOption v-for="item in options.ruleOptions" :value="item.value" :key="item.value">{{ item.name }}</SelectOption>
         </Select>
       </FormItem>
       <FormItem name="status" label="启用状态">

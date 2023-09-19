@@ -3,7 +3,7 @@ import { Layout, Menu as AntdMenu } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '@/store'
 import type { MenuClickEventHandler } from 'rc-menu/lib/interface'
-import { trasMenus, getTargetMenu, getActivePath } from './tools'
+import { trasMenus, getTargetMenu, getActivePath, MenuItem } from './tools'
 import { useRouteChange } from '@/hooks';
 import './index.less'
 const { Sider } = Layout
@@ -12,6 +12,15 @@ interface iMenuProps {
   collapsed: boolean;
   setCollapsed: (v: boolean) => void;
   emitRouteChange?: (path: string) => void;
+}
+
+function getCurrentOpenKey(menus?: MenuItem[]) {
+  if (!menus) return
+  for (let i = 0; i < menus.length; i++) {
+    if (location.pathname === menus[i].url || getCurrentOpenKey(menus[i].children)) {
+      return menus[i].key
+    }
+  }
 }
 
 function Menu(props: iMenuProps) {
@@ -53,7 +62,7 @@ function Menu(props: iMenuProps) {
     <AntdMenu
       theme="dark"
       onClick={onClick}
-      defaultOpenKeys={[memoMenus[0].key as string]}
+      defaultOpenKeys={[(getCurrentOpenKey(memoMenus) ?? memoMenus[0].key) as string]}
       selectedKeys={[activeMenu]}
       mode="inline"
       items={memoMenus}

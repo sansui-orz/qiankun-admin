@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, defineProps, defineEmits, defineExpose, toRaw } from "vue";
+import { reactive, defineProps, defineEmits, defineExpose, toRaw, onMounted } from "vue";
 import {
   Card,
   Form,
@@ -11,6 +11,7 @@ import {
   Input,
   Button,
 } from "ant-design-vue";
+import { useOptionsStore } from '@/store/options'
 
 defineExpose({
   getSearchValues() {
@@ -24,6 +25,11 @@ const emit = defineEmits<{
   search: [values: SearchStateType];
   create: [];
 }>();
+
+const options = useOptionsStore()
+onMounted(() => {
+  options.getMenuOptions()
+})
 
 const formState = reactive<SearchStateType>(
   props.initState || {
@@ -61,12 +67,7 @@ export type SearchStateType = {
           <Col :span="6">
             <FormItem name="menus" label="目录权限">
               <Select v-model:value="formState.menus" :max-tag-count="1" mode="multiple" allow-clear>
-                <SelectOption :value="11">数据看板</SelectOption>
-                <SelectOption :value="12">数据详情</SelectOption>
-                <SelectOption :value="13">数据表格</SelectOption>
-                <SelectOption :value="21">账号管理</SelectOption>
-                <SelectOption :value="22">角色管理</SelectOption>
-                <SelectOption :value="23">菜单管理</SelectOption>
+                <SelectOption v-for="item in options.menuOptions" :key="item.value" :value="item.value">{{ item.name }}</SelectOption>
               </Select>
             </FormItem>
           </Col>

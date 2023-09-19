@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, defineExpose, defineEmits, toRaw } from "vue";
+import { ref, defineExpose, defineEmits, toRaw, onMounted } from "vue";
 import { Modal, Form, FormItem, Input, Select, SelectOption, message } from "ant-design-vue";
 import request from 'main_request_vue/request';
+import { useOptionsStore } from '@/store/options'
 
 defineExpose({
   show: (state: AccountType | undefined, create: boolean) => {
@@ -21,6 +22,11 @@ defineExpose({
 const emit = defineEmits<{
   refresh: [];
 }>();
+
+const options = useOptionsStore()
+onMounted(() => {
+  options.getMenuOptions()
+})
 
 const defaultState = {
   id: undefined,
@@ -88,12 +94,7 @@ export type AccountType = {
       </FormItem>
       <FormItem label="用户权限" name="menus">
         <Select v-model:value="formState.menus" mode="multiple" allow-clear>
-          <SelectOption :value="11">数据看板</SelectOption>
-          <SelectOption :value="12">数据详情</SelectOption>
-          <SelectOption :value="13">数据表格</SelectOption>
-          <SelectOption :value="21">账号管理</SelectOption>
-          <SelectOption :value="22">角色管理</SelectOption>
-          <SelectOption :value="23">菜单管理</SelectOption>
+          <SelectOption v-for="item in options.menuOptions" :key="item.value" :value="item.value">{{ item.name }}</SelectOption>
         </Select>
       </FormItem>
       <FormItem name="buttons" label="按钮权限">
