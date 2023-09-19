@@ -1,15 +1,15 @@
 import { ReactNode, useEffect, useContext } from 'react';
 import KeepAlive, { useAliveController } from 'react-activation'
-import SetMainStateContext from '@/hooks/context/setGlobalState'
+import SetMainStateContext from '@/hooks/context/connectMainStore'
 import { useEvent } from '@/hooks'
 // import { useEmit } from 'main_hooks/useEvent'
 
 function Keeper(props: { name: string; children: ReactNode }) {
   const { drop } = useAliveController()
 
-  const { setGlobalState } = useContext(SetMainStateContext)
+  const { dispatch } = useContext(SetMainStateContext)
   useEffect(() => {
-    setGlobalState({ type: 'addTabs', value: props.name })
+    dispatch!({ type: 'addTabs', value: props.name })
   }, [])
 
   useEvent('removeTab', (event) => {

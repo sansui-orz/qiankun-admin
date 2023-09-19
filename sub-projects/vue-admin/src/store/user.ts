@@ -1,26 +1,19 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 
+const defaultState = {
+  username: '',
+  account: '',
+  avatar: ''
+}
+
 export const useUserStore = defineStore({
   id: 'user',
-  state: () => ({
-    name: 'Eduardo',
-    isAdmin: true,
-  }),
+  state: () => ({ ...defaultState }),
 
   actions: {
-    logout() {
-      this.$patch({
-        name: '',
-        isAdmin: false,
-      })
-    },
-    async login(user: string, password: string) {
-      const userData = await Promise.resolve({})
-
-      this.$patch({
-        name: user,
-        ...userData,
-      })
+    // 需要与主应用关联状态的store, 需要设置该action，主应用调用该方法覆盖数据
+    setStoreState(values: typeof defaultState) {
+      this.$patch(values)
     },
   },
 })

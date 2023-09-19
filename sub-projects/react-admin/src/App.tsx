@@ -1,7 +1,9 @@
-import { ReactNode, useCallback } from 'react'
+import { ReactNode } from 'react'
 import { AliveScope } from 'react-activation'
-import SetMainStateContext from '@/hooks/context/setGlobalState'
+import ConnectMainStore from '@/hooks/context/connectMainStore'
 import { ConfigProvider } from "antd";
+import { Provider } from "react-redux";
+import store from "@/store";
 
 import dayjs from 'dayjs';
 // import enUS from 'antd/locale/en_US';
@@ -31,25 +33,24 @@ const theme = {
   },
 };
 
-type AppProps = {
+export type AppProps = {
   children: ReactNode;
-  setGlobalState?: (args: { type: string; value: any }) => void;
+  dispatch?: (arg: {type: string; value: any}) => void;
+  getMainState?: () => any;
 }
 
 function App(props: AppProps) {
-  const setGlobalState = useCallback((arg: { type: string; value: any} ) => {
-    props.setGlobalState && props.setGlobalState(arg)
-  }, [])
-
   return (
     <div className="react-app">
-      <ConfigProvider theme={theme} locale={zhCN}>
-        <SetMainStateContext.Provider value={{ setGlobalState }}>
-          <AliveScope>
-            { props.children }
-          </AliveScope>
-        </SetMainStateContext.Provider>
-      </ConfigProvider>
+      <Provider store={store}>
+        <ConfigProvider theme={theme} locale={zhCN}>
+          <ConnectMainStore.Provider value={{ dispatch: props.dispatch, getMainState: props.getMainState }}>
+            <AliveScope>
+              { props.children }
+            </AliveScope>
+          </ConnectMainStore.Provider>
+        </ConfigProvider>
+      </Provider>
     </div>
   )
 }

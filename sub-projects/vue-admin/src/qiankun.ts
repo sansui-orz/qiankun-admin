@@ -1,24 +1,22 @@
 import { App as TypeApp } from 'vue'
 import { qiankunWindow, renderWithQiankun, QiankunProps } from 'vite-plugin-qiankun/dist/helper'
 import { RenderType } from './main'
+import { useUserStore } from './store/user'
 
 function qiankunInit(render: RenderType) {
   let app: TypeApp | undefined
   let root: Element | undefined
-  // let skipStateChange = false
   if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
     render({});
   } else {
     renderWithQiankun({
       mount(props: QiankunProps) {
         if (!root) {
-          [root, app] = render({ ...props, setGlobalState: ({ type, value }) => {
-            switch(type) {
-              case 'addTabs':
-                props.actions.dispatch({ type, value: '/system/' + value })
-                return
-            }
-          } });
+          const { dispatch, getMainState } = props.store.connectVueStore('vue-sub-project', {
+            // 需要关联的Store放在这里
+            'userState': useUserStore
+          });
+          [root, app] = render({ ...props, dispatch, getMainState });
         } else {
           root!.setAttribute('display', 'block')
           props.container?.parentNode?.appendChild(root!)

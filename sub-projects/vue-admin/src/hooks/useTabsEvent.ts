@@ -4,8 +4,8 @@ import { routes } from '@/router/router'
 
 function useTabsEvent() {
   const keepAliveInstance = ref<typeof KeepAlive & { _?: { __v_cache: Map<ConcreteComponent, VNode> }} | null>(null)
-  type f = (args: { type: string; value: any }) => void
-  const setGlobalState = inject<f>('setGlobalState')!
+  type f = (arg: { type: string; value: any }) => void
+  const dispatch = inject<f>('dispatch')!
 
   useEvent('removeTab', (event: { detail: string; }) => {
     if (keepAliveInstance?.value?._?.__v_cache && event.detail) {
@@ -22,7 +22,7 @@ function useTabsEvent() {
     const pathname = window.location.pathname.replace(/^\/system/, '')
     for (let item of routes) {
       if (item.path === pathname && item.meta?.keepAliveName) {
-        setGlobalState && setGlobalState({ type: 'addTabs', value: item.meta?.keepAliveName })
+        dispatch && dispatch({ type: 'addTabs', value: '/system/' + item.meta?.keepAliveName })
         return
       }
     }

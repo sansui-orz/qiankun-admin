@@ -1,5 +1,5 @@
 import { registerMicroApps, start } from 'qiankun';
-import actions from '@/store/qiankun'
+import connect from '@/store/connectMainStore'
 
 function qiankunInit() {
   registerMicroApps([
@@ -11,7 +11,7 @@ function qiankunInit() {
         return location.pathname.startsWith('/databoard')
       },
       props:{
-        actions
+        store: connect(['userState'])
       }
     },
     {
@@ -22,7 +22,7 @@ function qiankunInit() {
         return location.pathname.startsWith('/system')
       },
       props:{
-        actions
+        store: connect(['userState'])
       }
     },
   ]);

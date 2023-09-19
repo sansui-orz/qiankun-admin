@@ -16,9 +16,7 @@ export type userStateType = UserInfo
 
 const reducer = (state = initState, action: userActionType) => {
   switch (action.type) {
-    case 'updateUsername':
-      return { ...state, username: action.value as string }
-    case 'setUserInfo':
+    case 'setUserStateState':
       return { ...(action.value as userStateType) }
   }
   return state

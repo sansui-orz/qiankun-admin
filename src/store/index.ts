@@ -4,7 +4,7 @@ import tabsState, { tabsStateType, tabsActionType } from './reducer/tabs'
 import userState, { userStateType, userActionType } from './reducer/user'
 import menusState, { menusStateType, menusActionType } from './reducer/menus'
 
-type StoreStateType = {
+export type StoreStateType = {
     tabsState: tabsStateType;
     userState: userStateType;
     menusState: menusStateType;

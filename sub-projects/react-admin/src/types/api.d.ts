@@ -36,3 +36,9 @@ export interface ChartDetail {
     type: string;
   }>
 }
+
+export type UserInfo = {
+  account: string;
+  avatar: string;
+  username: string;
+}

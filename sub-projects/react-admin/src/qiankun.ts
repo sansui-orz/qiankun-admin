@@ -1,5 +1,7 @@
 import { qiankunWindow, renderWithQiankun, QiankunProps } from 'vite-plugin-qiankun/dist/helper';
 import { RenderType } from './main'
+import store from '@/store'
+
 export default function qiankunInit(render: RenderType) {
   if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
     render({})
@@ -7,12 +9,12 @@ export default function qiankunInit(render: RenderType) {
     let container: Element | undefined;
     renderWithQiankun({
       mount(props: QiankunProps) {
+        const { dispatch, getMainState } = props.store.connectReactStore('react-sub-project', store);
         if (!container) {
           [container] = render({
             ...props,
-            setGlobalState: (arg: { type: string; value: any }) => {
-              props.actions.dispatch(arg)
-            }
+            dispatch,
+            getMainState
           })
         } else {
           container!.setAttribute('display', 'block')
