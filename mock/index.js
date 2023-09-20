@@ -14,9 +14,10 @@ app.use(cors({
 
 app.use(koaBody());
 
+const whiteList = ['/signup', '/login']
 app.use((ctx, next) => {
   // 检查登录状态
-  if (ctx.url === '/login' || ctx.url === '/signup') {
+  if (whiteList.includes(ctx.url)) {
     next()
   } else {
     if (ctx.request.headers['x-token']) {

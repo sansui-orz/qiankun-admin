@@ -9,7 +9,11 @@
     "start-sub-vue": "cd ./sub-projects/vue-admin && npm start",
     "start-sub-react": "cd ./sub-projects/react-admin && npm start",
     "start-mock": "cd ./mock && npm start",
-    "start-all": "npx concurrently \"npm run start-mock\" \"npm run start-sub-vue\" \"npm run start-sub-react\" \"npm run start\""
+    "start-all": "npx concurrently \"npm run start-mock\" \"npm run start-sub-vue\" \"npm run start-sub-react\" \"npm run start\"",
+    "deploy": "npm run build && cd dist && npx http-server -p 8010 --cors",
+    "deploy-sub-react": "cd ./sub-projects/react-admin && npm run build && cd dist && npx http-server -p 8011 --cors",
+    "deploy-sub-vue": "cd ./sub-projects/vue-admin && npm run build && cd dist && npx http-server -p 8012 --cors",
+    "deploy-all": "npx concurrently \"npm run start-mock\" \"npm run deploy-sub-vue\" \"npm run deploy-sub-react\" \"npm run deploy\""
   },
   "keywords": [],
   "author": "",
@@ -34,6 +38,7 @@
     "css-loader": "^6.8.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.3",
+    "http-server": "^14.1.1",
     "less": "^4.2.0",
     "less-loader": "^11.1.3",
     "postcss": "^8.4.29",

@@ -31,8 +31,8 @@ module.exports = {
             options: {
               limit: 8192,
               outputPath: "./asset/images",
-              name: "[name]_[hash][ext][query]",
-              publicPath: "./dist/asset/images",
+              name: "[name]_[hash].[ext][query]",
+              publicPath: "./asset/images",
             },
           },
         ],
@@ -88,6 +88,15 @@ module.exports = {
     }),
     new HTMLWebpackPlugin({
       template: path.resolve(__dirname, "../src/index.html"),
+      inject: "body",
+      favicon: path.resolve(__dirname, "../src/assets/images/logo.ico"),
+      publicPath: "./",
+      excludeChunks: ['main_request_react', 'main_request_vue']
+    }),
+    // 由于使用http-server启动服务，所以多创建一个login页面对应路由。真实部署到服务器应该通过修改nginx配置支持history路由模式
+    new HTMLWebpackPlugin({
+      template: path.resolve(__dirname, "../src/index.html"),
+      filename: 'login.html',
       inject: "body",
       favicon: path.resolve(__dirname, "../src/assets/images/logo.ico"),
       publicPath: "./",
