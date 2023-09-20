@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, defineProps, defineEmits, defineExpose, toRaw, onMounted } from "vue";
+import { reactive, toRaw, onMounted } from "vue";
 import {
   Card,
   Form,
@@ -12,6 +12,12 @@ import {
   Button,
 } from "ant-design-vue";
 import { useOptionsStore } from '@/store/options'
+
+export type SearchStateType = {
+  menus: number[];
+  buttons: number[];
+  name: string;
+};
 
 defineExpose({
   getSearchValues() {
@@ -47,13 +53,7 @@ const create = () => {
   emit('create');
 };
 </script>
-<script lang="ts">
-export type SearchStateType = {
-  menus: number[];
-  buttons: number[];
-  name: string;
-};
-</script>
+
 <template>
   <div class="menus-search">
     <Card>

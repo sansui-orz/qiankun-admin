@@ -1,19 +1,15 @@
+import axios, { AxiosResponse, AxiosInstance } from 'axios'
+import Cookie from 'js-cookie'
+
 export const TOKEN_NAME = "TOKEN";
 
 export default function createRequest() {
-  type AxiosResponse = import("axios").AxiosResponse;
-  type AxiosInstance = import("axios").AxiosInstance;
   let instance: AxiosInstance | undefined = undefined;
   async function init(): Promise<AxiosInstance> {
     if (instance) return instance;
     // 作为模块联邦不能使用esm的方式同步引入模块，否则会将模块一同打入模块中无法共享依赖
-    const Axios = await import("axios");
-    const Cookie = (await import("js-cookie")).default;
-    let { default: axios } = Axios;
-    // @ts-ignore
-    if (axios.default) axios = axios.default
     instance = axios.create({
-      baseURL: "http://localhost:7999",
+      baseURL: API_HOST
     });
 
     instance.interceptors.request.use(function (config) {

@@ -14,7 +14,7 @@ import logo from '@/assets/images/logo.png';
 import "./index.less";
 
 const banners = [banner1, banner2, banner3, banner4, banner5, banner6, banner7];
-
+const day = Math.floor(Math.random() * banners.length) // new Date().getDay()
 export default function LoginSignup() {
   const onLoginSubmit = useCallback<LoginSubmitType>(() => {}, []);
   const onSignupSubmit = useCallback<SignupSubmitType>(() => {}, []);
@@ -45,7 +45,7 @@ export default function LoginSignup() {
           <div
             className="relative w-full bg-center bg-no-repeat bg-cover h-200"
             style={{
-              backgroundImage: `url(${banners[4]})`,
+              backgroundImage: `url(${banners[day]})`,
               borderRadius: "8px 8px 0 0",
             }}
           >

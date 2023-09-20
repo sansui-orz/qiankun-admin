@@ -5,7 +5,7 @@ function qiankunInit() {
   registerMicroApps([
     {
       name: 'react-app', // app name registered
-      entry: '//localhost:8001',
+      entry: REACT_SUB_PRODUCT_HOST,
       container: '#root',
       activeRule: (location) => {
         return location.pathname.startsWith('/databoard')
@@ -16,7 +16,7 @@ function qiankunInit() {
     },
     {
       name: 'vue-app', // app name registered
-      entry: '//localhost:8002',
+      entry: VUE_SUB_PRODUCT_HOST,
       container: '#root',
       activeRule: (location) => {
         return location.pathname.startsWith('/system')

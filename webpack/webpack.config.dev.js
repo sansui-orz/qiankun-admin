@@ -1,17 +1,16 @@
 const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
+const webpack = require('webpack')
 const { ModuleFederationPlugin } = require("webpack").container;
-// const dependencies = require(path.join(__dirname, './package.json')).dependencies;
 
 module.exports = {
-  mode: process.env.mode || "development",
-  entry: "./src/index.tsx",
+  mode: "development",
+  entry: path.resolve(__dirname, "../src/index.tsx"),
   output: {
-    filename: "index.js",
+    filename: "asset/js/[name].js",
     clean: true,
     publicPath: "http://localhost:8000/",
     scriptType: "text/javascript",
-    assetModuleFilename: "assets/[name]_[hash][ext]",
   },
   devServer: {
     hot: true,
@@ -27,9 +26,26 @@ module.exports = {
         {
           from: /^\/[a-z_-]+\/.*/,
           to: (context) => {
-            if (context.parsedUrl.pathname.includes(".")) {
-              const paths = context.parsedUrl.pathname.split("/");
-              return "/" + paths[paths.length - 1];
+            // 做资源重定向
+            const pathname = context.parsedUrl.pathname
+            if (pathname.includes(".") && pathname.includes('/')) {
+              const paths = pathname.split("/");
+              console.log('pathname', pathname)
+              if (!paths[0]) paths.shift()
+              if (paths[0] !== 'asset') {
+                const p = paths.reduce((pre, nxt) => {
+                  if ((!pre && nxt.includes('.')) || (!pre && nxt === 'asset')) {
+                    return '/' + nxt
+                  } else if (pre) {
+                    return pre + '/' + nxt
+                  } else {
+                    return ''
+                  }
+                }, '')
+                console.log('p => ', p)
+                return p || '/'
+              }
+              return "/" + paths.join('/');
             }
             return "/";
           },
@@ -49,6 +65,9 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: 8192,
+              outputPath: "./asset/images",
+              name: '[name].[ext][query]',
+              publicPath: './dist/asset/images'
             },
           }
         ],
@@ -73,7 +92,7 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(__dirname, "../src"),
     },
   },
   experiments: {
@@ -82,14 +101,21 @@ module.exports = {
   externals: {
     React: "react",
     ReactDom: "react-dom",
-    ReactRouterDom: "react-router-dom",
+    ReactRouterDom: "react-router-dom"
   },
   plugins: [
+    new webpack.DefinePlugin({
+      REACT_SUB_PRODUCT_HOST: `'http://localhost:8001'`,
+      VUE_SUB_PRODUCT_HOST: `'http://localhost:8002'`,
+      API_HOST: `'http://localhost:7999'`,
+      MAIN_HOST: `'http://localhost:8000'`
+    }),
     new HTMLWebpackPlugin({
-      template: path.resolve(__dirname, "./src/index.html"),
+      template: path.resolve(__dirname, "../src/index.html"),
       inject: "body",
-      favicon: 'https://lms-flies.oss-cn-guangzhou.aliyuncs.com/qiankun-admin/logo.ico', // path.resolve(__dirname, './src/assets/images/logo.ico'),
-      publicPath: './'
+      favicon: path.resolve(__dirname, '../src/assets/images/logo.ico'),
+      publicPath: './',
+      excludeChunks: ['main_request_react', 'main_request_vue']
     }),
     new ModuleFederationPlugin({
       name: "main_request_react",
@@ -98,7 +124,6 @@ module.exports = {
       exposes: {
         "./request": "./src/utils/request.ts",
       },
-      shared: ["axios"],
     }),
     new ModuleFederationPlugin({
       name: "main_request_vue",
@@ -107,7 +132,6 @@ module.exports = {
       exposes: {
         "./request": "./src/utils/request.ts",
       },
-      shared: ["axios"],
     }),
   ],
   stats: {

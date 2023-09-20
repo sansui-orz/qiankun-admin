@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineExpose, defineEmits, toRaw, onMounted } from "vue";
+import { ref, toRaw, onMounted } from "vue";
 import { Modal, Form, FormItem, Input, Select, SelectOption, message } from "ant-design-vue";
 import request from "main_request_vue/request";
 import { useOptionsStore } from '@/store/options'

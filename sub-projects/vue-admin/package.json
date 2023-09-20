@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "start": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "dev": "vite --mode development",
+    "start": "vite --mode development",
+    "build": "vue-tsc && vite build --mode production",
+    "preview": "vite preview",
+    "server": "cd ./dist && http-server -p 8012 --cors"
   },
   "dependencies": {
     "ant-design-vue": "^4.0.3",

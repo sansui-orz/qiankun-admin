@@ -3,6 +3,11 @@
 
 qiankun-admin是一个免费开源的中后台模版。使用了最新的`qiankun`, `Vue3`, `Webpack5`, `Vite4`, `React18`, `TypeScript`等主流技术框架，开箱即用的中后台前端解决方案。
 
+### 技术栈
+- 主应用: `React18`+`Webpack5`+`qiankun`+`antd`+`react-redux`+`Typescript`
+- 子应用1: `React18`+`Vite`+`antd`+`react-redux`+`Typescript`
+- 子应用2: `Vue3`+`Vite`+`antd for vue`+`pinia`+`Typescript`
+
 ## 启动服务
 
 首先在根文件夹，mock文件夹，以及sub-projects下的`react-admin`,`vue-admin`文件夹下都执行`npm install`进行依赖安装。

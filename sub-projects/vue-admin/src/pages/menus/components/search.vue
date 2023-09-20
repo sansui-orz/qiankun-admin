@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, defineProps, defineEmits, ref, toRaw, onMounted } from "vue";
+import { reactive, ref, toRaw, onMounted } from "vue";
 import {
   Card,
   Form,
@@ -13,6 +13,13 @@ import {
 } from "ant-design-vue";
 import CreateSystem from './createSystem.vue'
 import { useOptionsStore } from '@/store/options'
+
+
+export type SearchStateType = {
+  system: string;
+  status: "on" | "off" | "all";
+  name: string;
+};
 
 defineExpose({
   getSearchValues() {
@@ -45,13 +52,6 @@ const create = () => {
 const onCreated = () => {
   emit('search', formState)
 }
-</script>
-<script lang="ts">
-export type SearchStateType = {
-  system: string;
-  status: "on" | "off" | "all";
-  name: string;
-};
 </script>
 
 <template>

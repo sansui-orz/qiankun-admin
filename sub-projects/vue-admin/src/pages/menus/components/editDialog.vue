@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineExpose, reactive, toRaw, onMounted } from "vue";
+import { ref, reactive, toRaw, onMounted } from "vue";
 import {
   Modal,
   Form,
