@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite --mode development",
     "start": "vite --mode development",
+    "start-single": "vite --mode single",
     "build": "vue-tsc && vite build --mode production",
     "preview": "vite preview",
-    "server": "cd ./dist && http-server -p 8012 --cors"
+    "server": "cd ./dist && http-server -p 8012 --cors",
+    "tsc": "vue-tsc"
   },
   "dependencies": {
     "ant-design-vue": "^4.0.3",
@@ -20,6 +22,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.15",
+    "js-cookie": "^3.0.5",
     "postcss": "^8.4.29",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.0.2",

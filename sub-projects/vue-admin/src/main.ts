@@ -8,9 +8,6 @@ import { i18nInit } from 'main_for_vue/i18n'
 import languageEn from '@/utils/language-en.json'
 import languageZh from '@/utils/language-zh.json'
 
-declare global {
-  const $t: (code: string, options?: any) => string;
-}
 declare module 'vue' {
   // 扩展全局变量的接口内容，需要扩展ComponentCustomProperties这个接口
   interface ComponentCustomProperties {

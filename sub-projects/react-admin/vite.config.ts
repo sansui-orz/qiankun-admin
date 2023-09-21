@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => {
     base: env.APP_HOST,
     define: {
       $t: '__transition',
+      qiankunMainAppHost: `'${env.FEDERATION_HOST}'`
     },
 
     css: {

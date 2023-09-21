@@ -8,13 +8,16 @@ import { useUserStore } from '@/store/user';
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 import enUS from "ant-design-vue/es/locale/en_US";
 import dayjs from "dayjs";
+import SingleControl from '@/components/singleControl/index.vue'
+import { qiankunWindow } from 'vite-plugin-qiankun/dist/helper'
 import "dayjs/locale/zh-cn";
 import "./App.less";
 
 const user = useUserStore()
-dayjs.locale(user.language === 'zh' ? "zh-cn" : 'en');
 const locale = computed(() => user.language === 'zh' ? zhCN : enUS);
+const inQiankun = !!qiankunWindow.__POWERED_BY_QIANKUN__
 
+dayjs.locale(user.language === 'zh' ? "zh-cn" : 'en');
 watch(() => user.language, () => {
   dayjs.locale(user.language === 'zh' ? "zh-cn" : 'en');
 })
@@ -40,6 +43,7 @@ const keepAliveInstance = useTabsEvent();
           <component :is="Component" />
         </keep-alive>
       </router-view>
+      <SingleControl v-if="!inQiankun" />
     </config-provider>
   </div>
 </template>

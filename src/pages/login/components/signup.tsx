@@ -29,7 +29,7 @@ export default function Signup(props: { onSubmit: SignupSubmitType }) {
           password: encodePassword(values.password!),
         });
         const back = searchParams.get('back')
-        Cookie.set('TOKEN', res.data.token)
+        Cookie.set('TOKEN', res.data.token, { expires: 7, path: '' })
         window.location.href = back ? decodeURIComponent(back) : '/'
       } catch (err: unknown) {
         messageApi.open({

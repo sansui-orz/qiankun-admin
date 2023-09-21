@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite --mode development",
+    "start-single": "vite --mode single",
     "build": "tsc && vite build --mode production",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",

@@ -4,7 +4,20 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue + TS</title>
+    <title>vue子项目</title>
+    <script>
+      // 兼容子应用单独运行时
+      if (!window.__transition) {
+        const __transition = (code, options) => {
+          if (__transition !== window.__transition) {
+            return window.__transition(code, options)
+          }
+          return ''
+        }
+        window.__transition = __transition
+      }
+    </script>
+
   </head>
   <body>
     <div id="vue-app"></div>

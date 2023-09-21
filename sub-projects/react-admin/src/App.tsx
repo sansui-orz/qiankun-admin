@@ -4,23 +4,10 @@ import ConnectMainStore from "@/hooks/context/connectMainStore";
 import { ConfigProvider } from "antd";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import store, { RootState } from "@/store";
-
 import dayjs from "dayjs";
 import enUS from "antd/locale/en_US";
 import zhCN from "antd/locale/zh_CN";
 import "dayjs/locale/zh-cn";
-import { i18nInit } from 'main_for_react/i18n'
-import languageEn from '@/utils/language-en.json'
-import languageZh from '@/utils/language-zh.json'
-
-declare global {
-  const $t: (code: string, options?: any) => string;
-}
-
-i18nInit({
-  'en': languageEn,
-  'zh-CN': languageZh
-})
 
 import "./App.less";
 
@@ -76,7 +63,9 @@ function App(props: AppProps) {
     <div className="react-app">
       <Provider store={store}>
         <Inner dispatch={props.dispatch} getMainState={props.getMainState}>
-          <AliveScope>{props.children}</AliveScope>
+          <AliveScope>
+            {props.children}
+          </AliveScope>
         </Inner>
       </Provider>
     </div>

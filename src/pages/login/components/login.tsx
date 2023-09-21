@@ -29,8 +29,12 @@ export default function Login(props: { onSubmit: LoginSubmitType }) {
           password: encodePassword(values.password!),
         });
         const back = searchParams.get('back')
-        Cookie.set("TOKEN", res.data.token);
-        window.location.href = back ? decodeURIComponent(back) : "/";
+        Cookie.set("TOKEN", res.data.token, { expires: 7, path: '' });
+        let path = back ? decodeURIComponent(back) : "/";
+        if (searchParams.get('withToken')) {
+          path = path + (path.includes('?') ? '&' : '?') + 'token=' + res.data.token
+        }
+        window.location.href = path;
       } catch (err: unknown) {
         messageApi.open({
           type: "error",

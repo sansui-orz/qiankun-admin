@@ -13,6 +13,7 @@ export default defineConfig(({ command, mode }) => {
     base: env.APP_HOST,
     define: {
       $t: '__transition',
+      qiankunMainAppHost: `'${env.FEDERATION_HOST}'`
     },
     resolve: {
       alias: {
