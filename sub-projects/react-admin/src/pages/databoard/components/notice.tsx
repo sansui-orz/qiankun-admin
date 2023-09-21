@@ -12,7 +12,7 @@ function Notice(props: { notice: PanelData['notice'] }) {
     });
   };
   return (
-    <Card title={`通知公告(${props.notice?.length})`} extra={<a href="#" onClick={onClick}>更多</a>}>
+    <Card title={`${$t('notice')}(${props.notice?.length})`} extra={<a href="#" onClick={onClick}>{$t('more')}</a>}>
       {contextHolder}
       <ul>
         {props.notice ? props.notice!.map((item) => {

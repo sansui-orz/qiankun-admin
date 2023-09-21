@@ -30,7 +30,7 @@ function SimpleChartPanel(props: PropsType) {
   const conversionRate = useRef<HTMLDivElement>(null);
   const origin = useRef<HTMLDivElement>(null);
   const store = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const chartInit = useCallback(() => {
     const saleChart = echarts.init(panel.current);
@@ -199,7 +199,7 @@ function SimpleChartPanel(props: PropsType) {
 
   const onClick = () => {
     // to detail
-    navigate('/detail')
+    navigate("/detail");
   };
 
   return (
@@ -209,7 +209,7 @@ function SimpleChartPanel(props: PropsType) {
         title="销量/流量"
         extra={
           <a href="#" onClick={onClick}>
-            更多
+            {$t("more")}
           </a>
         }
       >
@@ -222,7 +222,7 @@ function SimpleChartPanel(props: PropsType) {
             title="转化率"
             extra={
               <a href="#" onClick={onClick}>
-                更多
+                {$t("more")}
               </a>
             }
           >
@@ -235,7 +235,7 @@ function SimpleChartPanel(props: PropsType) {
             title="访问来源"
             extra={
               <a href="#" onClick={onClick}>
-                更多
+                {$t("more")}
               </a>
             }
           >
@@ -248,7 +248,7 @@ function SimpleChartPanel(props: PropsType) {
             title="库存分布"
             extra={
               <a href="#" onClick={onClick}>
-                更多
+                {$t("more")}
               </a>
             }
           >

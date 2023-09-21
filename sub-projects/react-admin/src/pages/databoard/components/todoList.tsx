@@ -12,7 +12,7 @@ function TodoList(props: { list: PanelData['todoList'] }) {
     });
   };
   return (
-    <Card title={`待办事项(${props.list?.length})`} extra={<a href="#" onClick={onClick}>更多</a>}>
+    <Card title={`${$t('todolist')}(${props.list?.length})`} extra={<a href="#" onClick={onClick}>{$t('more')}</a>}>
       {contextHolder}
       <ul>
         {props.list ? props.list!.map((item) => {

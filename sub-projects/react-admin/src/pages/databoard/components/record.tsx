@@ -12,7 +12,7 @@ function Records(props: { records: PanelData['records'] }) {
     });
   };
   return (
-    <Card title={`变更记录(${props.records?.length})`} extra={<a href="#" onClick={onClick}>更多</a>}>
+    <Card title={`${$t('change-logs')}(${props.records?.length})`} extra={<a href="#" onClick={onClick}>{$t('more')}</a>}>
       {contextHolder}
       <ul>
         {props.records ? props.records!.map((item) => {

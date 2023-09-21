@@ -1,0 +1,11 @@
+{
+  "account": "Account",
+  "email": "Email",
+  "include-rule": "Include rules",
+  "status": "Status",
+  "create": "Create",
+  "search": "Search",
+  "off": "Off",
+  "on": "On",
+  "all": "All"
+}

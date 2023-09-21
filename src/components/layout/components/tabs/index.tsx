@@ -56,7 +56,7 @@ function Tabs(props: PropsType) {
       type="editable-card"
       onEdit={onEdit}
       size="small"
-      items={tabs.map(item => ({ label: item.name, children: item + 'children', key: item.url }))}
+      items={tabs.map(item => ({ label: $t(item.languageCode), children: item + 'children', key: item.url }))}
       onTabClick={onTabClick}
     />
   ) : null

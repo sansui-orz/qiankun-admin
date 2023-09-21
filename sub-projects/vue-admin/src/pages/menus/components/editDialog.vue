@@ -11,7 +11,7 @@ import {
   InputNumber,
   message
 } from "ant-design-vue";
-import request from "main_request_vue/request";
+import request from "main_for_vue/request";
 import { useOptionsStore } from '@/store/options'
 
 defineExpose({

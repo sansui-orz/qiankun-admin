@@ -1,6 +1,6 @@
 import React, { ReactNode, useState, useCallback } from "react";
 import { Layout, theme, Button, Avatar, Popover } from "antd";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Cookie from "js-cookie";
 import { TOKEN_NAME } from "@/utils/createRequest";
 import { RootState } from "@/store";
@@ -15,13 +15,13 @@ function Header(props: HeaderProps) {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const { avatar, username, account } = useSelector<
+  const { avatar, username, account, language } = useSelector<
     RootState,
     RootState["userState"]
   >((state) => state.userState);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const openStatusChange = useCallback(
     (isOpen: boolean) => {
       setOpen(isOpen);
@@ -33,20 +33,30 @@ function Header(props: HeaderProps) {
     Cookie.remove(TOKEN_NAME);
     navigate("/login");
   }, [navigate]);
-
+  const changeLanguage = useCallback(() => {
+    dispatch({ type: 'changeLanguage', value: language === 'zh' ? 'en' : 'zh' })
+    setTimeout(() => {
+      // 多语言切换直接重渲染，因为涉及的地方会很多
+      location.reload()
+    })
+  }, [language])
   return (
     <AntdHeader
       className="flex items-center pl-10 pr-20 header h-50"
       style={{ background: colorBgContainer }}
     >
       {props.children}
-      <div className="flex justify-end grow">
+      <div className="flex items-center justify-end grow">
+        <div className="language" onClick={changeLanguage}>
+          <div className={`zh ${language === 'zh' ? 'active-languge' : ''}`}>中</div>
+          <div className={`en ${language === 'en' ? 'active-languge' : ''}`}>en</div>
+        </div>
         <Popover
           content={
             <>
               <div className="text-center text-gray-300 text-14">{account}</div>
               <Button className="w-full" danger type="text" onClick={signout}>
-                退出登录
+                {$t('signout')}
               </Button>
             </>
           }

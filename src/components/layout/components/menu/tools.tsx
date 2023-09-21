@@ -19,7 +19,7 @@ export function trasMenus(menus: RootState['menusState']['menus']): MenuItem[] {
   return menus.map(item => {
     return {
       key: item.url || item.name,
-      label: item.name,
+      label: $t(item.languageCode),
       type: undefined,
       icon: getMenuIcon(item.name),
       url: item.url,

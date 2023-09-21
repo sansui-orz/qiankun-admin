@@ -9,7 +9,8 @@ export interface userActionType extends AnyAction {
 const initState = {
   username: '',
   account: '',
-  avatar: ''
+  avatar: '',
+  language: localStorage.getItem('language') || 'zh'
 }
 
 export type userStateType = UserInfo

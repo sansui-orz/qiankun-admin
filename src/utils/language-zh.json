@@ -1,0 +1,12 @@
+{
+  "system-name": "微前端管理系统",
+  "signout": "退出登录",
+  "data-center": "数据中心",
+  "databoard": "数据看板",
+  "data-detail": "数据详情",
+  "data-table": "数据表格",
+  "system-setting": "系统管理",
+  "accounts-setting": "账号管理",
+  "rules-setting": "角色管理",
+  "menus-setting": "菜单管理"
+}

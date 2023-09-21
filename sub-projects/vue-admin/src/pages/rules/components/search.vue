@@ -10,6 +10,7 @@ import {
   SelectOption,
   Input,
   Button,
+  RangePicker
 } from "ant-design-vue";
 import { useOptionsStore } from '@/store/options'
 
@@ -78,6 +79,11 @@ const create = () => {
                 <SelectOption :value="2">删除角色</SelectOption>
                 <SelectOption :value="3">创建账号</SelectOption>
               </Select>
+            </FormItem>
+          </Col>
+          <Col :span="6">
+            <FormItem label="创建时间">
+              <RangePicker />
             </FormItem>
           </Col>
         </Row>

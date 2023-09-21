@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import { Card, Table, Button, Popconfirm } from "ant-design-vue";
 import Search, { SearchStateType } from "./components/search.vue";
 import EditDialog from './components/editDialog.vue';
-import request from 'main_request_vue/request';
+import request from 'main_for_vue/request';
 import { MenuItem } from '@/types/api';
 
 const dialog = ref<InstanceType<typeof EditDialog> | null>(null)

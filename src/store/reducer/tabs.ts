@@ -14,6 +14,7 @@ const initState = {
   tabs: [] as Array<{
     url: string;
     name: string;
+    languageCode: string;
   }>,
   activePath: ''
 }
@@ -29,7 +30,8 @@ const reducer = (state = initState, action: tabsActionType) => {
       if (!tabs.find(item => item.url === url) && targetMenu) {
         tabs.push({
           url,
-          name: targetMenu.name
+          name: targetMenu.name,
+          languageCode: targetMenu.languageCode
         })
         return { ...state, tabs, activePath: url }
       } else {

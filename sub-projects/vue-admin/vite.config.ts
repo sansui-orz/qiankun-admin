@@ -11,6 +11,9 @@ export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const commonConifg = {
     base: env.APP_HOST,
+    define: {
+      $t: '__transition',
+    },
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
@@ -32,7 +35,7 @@ export default defineConfig(({ command, mode }) => {
         name: "vue-admin",
         remoteType: "module",
         remotes: {
-          main_request_vue: env.FEDERATION_HOST + '/remoteEntryForVue.js',
+          main_for_vue: env.FEDERATION_HOST + '/remoteEntryForVue.js',
           format: "module",
           from: "webpack",
         },

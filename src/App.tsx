@@ -4,7 +4,13 @@ import { RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import "./App.less";
 import router from "./router/router";
-import store from "@/store";
+import store, { RootState } from "@/store";
+import { useSelector } from "react-redux";
+import dayjs from 'dayjs';
+import enUS from 'antd/locale/en_US';
+import zhCN from 'antd/locale/zh_CN';
+import 'dayjs/locale/zh-cn';
+
 
 const theme = {
   components: {
@@ -25,6 +31,19 @@ const theme = {
   },
 };
 
+function Innner() { // 因为要使用store, 所以再抽离出一层
+  const { language } = useSelector<RootState, RootState["userState"]>((state) => state.userState);
+  useEffect(() => {
+    dayjs.locale(language === 'zh' ? 'zh-cn' : 'en');
+  }, [language])
+
+  return (
+    <ConfigProvider theme={theme} locale={language === 'zh' ? zhCN : enUS}>
+      <RouterProvider router={router} />
+    </ConfigProvider>
+  )
+}
+
 function App() {
   useEffect(() => {
     const loading = document.getElementById('app-loading')
@@ -32,9 +51,7 @@ function App() {
   }, [])
   return (
     <Provider store={store}>
-      <ConfigProvider theme={theme}>
-        <RouterProvider router={router} />
-      </ConfigProvider>
+      <Innner />
     </Provider>
   );
 }

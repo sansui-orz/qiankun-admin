@@ -4,7 +4,7 @@ import { Table, Card, Button, Popconfirm } from "ant-design-vue";
 import Search, { SearchStateType } from "./components/search.vue";
 import EditDialog from "./components/editDialog.vue";
 import { AccountItem } from "@/types/api";
-import request from 'main_request_vue/request';
+import request from 'main_for_vue/request';
 
 const searchRef = ref<InstanceType<typeof Search> | null>();
 const editDialogRef = ref<InstanceType<typeof EditDialog> | null>();

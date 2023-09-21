@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import request from 'main_request_vue/request';
+import request from 'main_for_vue/request';
 
 type MenuOptionsType = Array<{ value: number; name: string; }>
 type SystemOptionsType = Array<{ value: number; name: string; }>

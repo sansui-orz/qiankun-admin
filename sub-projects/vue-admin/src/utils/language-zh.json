@@ -1,0 +1,11 @@
+{
+  "account": "账号名称",
+  "email": "账号邮箱",
+  "include-rule": "包含角色",
+  "status": "启用状态",
+  "create": "创建账号",
+  "search": "搜索",
+  "off": "未启用",
+  "on": "启用",
+  "all": "全部"
+}

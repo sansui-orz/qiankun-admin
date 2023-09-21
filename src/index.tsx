@@ -3,9 +3,16 @@ import ReactDOM from "react-dom/client";
 import "normalize.css";
 import App from "./App";
 import qiankunInit from "./qiankun";
-import request from "./utils/request";
+import { axios, i18nInit } from "./utils";
 import store from "@/store";
 import { ConfigResponse } from "./types/api";
+import languageEn from "@/utils/language-en.json";
+import languageZh from "@/utils/language-zh.json";
+
+i18nInit({
+  en: languageEn,
+  "zh-CN": languageZh,
+});
 
 function init() {
   ReactDOM.createRoot(document.querySelector("#app") as HTMLElement).render(
@@ -15,7 +22,7 @@ function init() {
 }
 
 if (location.pathname !== "/login") {
-  request
+  axios
     .get<ConfigResponse>("/config")
     .then((res) => {
       store.dispatch({ type: "setUserInfo", value: res.data.userInfo });

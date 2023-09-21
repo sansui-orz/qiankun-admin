@@ -1,0 +1,12 @@
+{
+  "system-name": "qiankun-admin",
+  "signout": "Sign out",
+  "data-center": "Data center",
+  "databoard": "Databoard",
+  "data-detail": "Data detail",
+  "data-table": "Data table",
+  "system-setting": "System setting",
+  "accounts-setting": "Accounts setting",
+  "rules-setting": "Rules setting",
+  "menus-setting": "Menus setting"
+}

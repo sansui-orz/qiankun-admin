@@ -3,7 +3,8 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 const defaultState = {
   username: '',
   account: '',
-  avatar: ''
+  avatar: '',
+  language: localStorage.getItem('language') || 'zh'
 }
 
 export const useUserStore = defineStore({

@@ -5,7 +5,7 @@ import TodoList from "./components/todoList";
 import Records from "./components/record";
 import Notice from "./components/notice";
 import SimpleChartPanel from "./components/simpleChartPanel";
-import request from "main_request_react/request";
+import request from "main_for_react/request";
 import { PanelData } from "@/types/api";
 import { loadingHoc } from "@/comonents/loading";
 

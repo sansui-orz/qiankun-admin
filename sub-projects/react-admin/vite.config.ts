@@ -9,6 +9,10 @@ export default defineConfig(({ mode }) => {
 
   const commonConifg = {
     base: env.APP_HOST,
+    define: {
+      $t: '__transition',
+    },
+
     css: {
       preprocessorOptions: {
         less: {
@@ -35,7 +39,7 @@ export default defineConfig(({ mode }) => {
         name: "react-admin",
         remoteType: "module",
         remotes: {
-          main_request_react: env.FEDERATION_HOST + "/remoteEntryForReact.js",
+          main_for_react: env.FEDERATION_HOST + "/remoteEntryForReact.js",
           format: "module",
           from: "webpack",
         },

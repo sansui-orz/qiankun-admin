@@ -1,18 +1,28 @@
-import { ReactNode } from 'react'
-import { AliveScope } from 'react-activation'
-import ConnectMainStore from '@/hooks/context/connectMainStore'
+import { ReactNode, useEffect } from "react";
+import { AliveScope } from "react-activation";
+import ConnectMainStore from "@/hooks/context/connectMainStore";
 import { ConfigProvider } from "antd";
-import { Provider } from "react-redux";
-import store from "@/store";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import store, { RootState } from "@/store";
 
-import dayjs from 'dayjs';
-// import enUS from 'antd/locale/en_US';
-import zhCN from 'antd/locale/zh_CN';
-import 'dayjs/locale/zh-cn';
+import dayjs from "dayjs";
+import enUS from "antd/locale/en_US";
+import zhCN from "antd/locale/zh_CN";
+import "dayjs/locale/zh-cn";
+import { i18nInit } from 'main_for_react/i18n'
+import languageEn from '@/utils/language-en.json'
+import languageZh from '@/utils/language-zh.json'
 
-dayjs.locale('zh-cn');// 'en'
+declare global {
+  const $t: (code: string, options?: any) => string;
+}
 
-import './App.less'
+i18nInit({
+  'en': languageEn,
+  'zh-CN': languageZh
+})
+
+import "./App.less";
 
 const theme = {
   components: {
@@ -23,10 +33,10 @@ const theme = {
       horizontalMargin: "0px",
     },
     Button: {
-      defaultBg: '#00b96b',
-      colorPrimary: '#00b96b',
-      ghostBg: '#00b96b'
-    }
+      defaultBg: "#00b96b",
+      colorPrimary: "#00b96b",
+      ghostBg: "#00b96b",
+    },
   },
   token: {
     colorPrimary: "#00b96b",
@@ -35,24 +45,42 @@ const theme = {
 
 export type AppProps = {
   children: ReactNode;
-  dispatch?: (arg: {type: string; value: any}) => void;
+  dispatch?: (arg: { type: string; value: any }) => void;
   getMainState?: () => any;
+};
+
+function Inner(props: AppProps) {
+  const { language } = useSelector<RootState, RootState["userState"]>(
+    (state) => state.userState
+  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dayjs.locale(language === "zh" ? "zh-cn" : "en"); // 'en'
+  }, [language]);
+  return (
+    <ConnectMainStore.Provider
+      value={{
+        dispatch: props.dispatch || dispatch,
+        getMainState: props.getMainState,
+      }}
+    >
+      <ConfigProvider theme={theme} locale={language === "zh" ? zhCN : enUS}>
+        {props.children}
+      </ConfigProvider>
+    </ConnectMainStore.Provider>
+  );
 }
 
 function App(props: AppProps) {
   return (
     <div className="react-app">
       <Provider store={store}>
-        <ConfigProvider theme={theme} locale={zhCN}>
-          <ConnectMainStore.Provider value={{ dispatch: props.dispatch, getMainState: props.getMainState }}>
-            <AliveScope>
-              { props.children }
-            </AliveScope>
-          </ConnectMainStore.Provider>
-        </ConfigProvider>
+        <Inner dispatch={props.dispatch} getMainState={props.getMainState}>
+          <AliveScope>{props.children}</AliveScope>
+        </Inner>
       </Provider>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

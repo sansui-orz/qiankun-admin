@@ -1,0 +1,40 @@
+.language {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  margin-right: 20px;
+  cursor: pointer;
+  &:hover {
+    background: #efefef;
+  }
+  
+  .zh, .en {
+    position: absolute;
+    font-size: 12px;
+    transform: scale(0.6);
+    top: 8px;
+    left: 10px;
+    transition: all .5s;
+    height: 20px;
+    line-height: 18px;
+    padding: 0 2px;
+  }
+  .zh {
+    background: #000;
+    color: white;
+    padding-right: 3px;
+  }
+  .en {
+    background: #fff;
+    border: 1px solid #000;
+    color: #000;
+    line-height: 16px;
+  }
+  .active-languge {
+    top: 2px;
+    left: 2px;
+    transform: scale(0.8);
+    z-index: 9;
+  }
+}
