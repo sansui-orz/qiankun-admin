@@ -10,6 +10,7 @@
 - 主应用: `React18`+`Webpack5`+`qiankun`+`antd`+`react-redux`+`Typescript`
 - 子应用1: `React18`+`Vite`+`antd`+`react-redux`+`Typescript`
 - 子应用2: `Vue3`+`Vite`+`antd for vue`+`pinia`+`Typescript`
+- mock服务: `koa`
 
 ## 启动服务
 
@@ -19,7 +20,10 @@
 子应用分别使用`vite`+`Vue3`与`vite`+`React`搭建。
 数据mock服务使用`koa`搭建。
 
+直接启动：
 - 在根目录运行`npm run start-all`启动以下四个服务
+
+分别启动：
 - 在根目录运行`npm run start`启动主服务
 - 在根目录运行`npm run start-sub-vue`启动vue3子应用服务
 - 在根目录运行`npm run start-sub-react`启动react18子应用服务
@@ -39,6 +43,8 @@
 
 主应用与子应用分别拥有自己的状态，React主应用与子应用皆使用`react-redux`与`@reduxjs/toolkit`创建全局状态管理。Vue子应用则用官方推荐的`Pinia`库。
 
+![效果图示](./src/assets/images/store-share.gif)
+
 ![状态流转图示](./src/assets/images/class/global-store.drawio.png)
 
 相关方法使用:
@@ -47,6 +53,19 @@
   - `connect`方法返回值为`connectReactStore`与`connectVueStore`。分别提供给React与Vue子应用使用。通过`qiankun`的`props`传递。
 2. 子应用中，接收到`connectReactStore`与`connectVueStore`, 分别与自身`store`关联（注册监听以及同步初始值）。同时为了让主应用能够同步状态，分别需要在对应store中声明指定action。
 3. 子应用中分别通过`context`与`Provide/inject`向全局提供主应用的`dispatch`方法。
+
+定义一个共享store步骤:
+主应用：
+1. 先在主应用创建`reducer`，参照已有的`reducer`实现。然后正常在`store/index.ts`使用即可。
+2. 在主应用的`src/qiankun.ts`中，向子应用的`props.store`中添加刚刚创建的state名称，如已有的`store: connect(['userState', 'configState'])`。
+
+子应用：
+1. 在子应用中创建同样的`reducer`或者`store`(对vue)。
+2. 在react子应用中，正常注册`reducer`即可, 但是在`reducer`中，需要实现`set[StateName]State`的action, 主应用数据变更时，会调用该action全量更新该state的数据。
+3. 在vue子应用中，则需要实现`setStoreState`的action。另外，在vue子应用的`src/qiankun.ts`文件中，需要调用`connectVueStore`手动关联store，因为毕竟跟`react-redux`的用法不同。
+
+数据更新：
+1. 在触发数据变更时，直接调用主应用的`dispatch`, 然后再由主应用的`subscribe`回调触发子应用的`store`更新。所以在子应用中向全局注入了特殊的`dispatch`方法，直接使用封装好的`useMainStoreDispatch`即可。
 
 ## 构建部署
 
@@ -79,4 +98,5 @@ APP_HOST=http://127.0.0.1:8011/
 6. 全局数据状态管理封装 ✅
 7. 模块联邦共享全局模块 ✅
 8. 构建 ✅
-9. 编码规范eslint&提交规范husky
+9. 子应用单独启动开发
+10. 编码规范eslint&提交规范husky

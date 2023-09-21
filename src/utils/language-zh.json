@@ -8,5 +8,7 @@
   "system-setting": "系统管理",
   "accounts-setting": "账号管理",
   "rules-setting": "角色管理",
-  "menus-setting": "菜单管理"
+  "menus-setting": "菜单管理",
+  "store-action-example": "数据通信示例",
+  "store-action-example-vue": "数据通信示例vue"
 }

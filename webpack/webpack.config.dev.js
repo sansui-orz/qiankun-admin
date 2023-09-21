@@ -34,7 +34,6 @@ module.exports = merge(commonConfig({
             const pathname = context.parsedUrl.pathname
             if (pathname.includes(".") && pathname.includes('/')) {
               const paths = pathname.split("/");
-              console.log('pathname', pathname)
               if (!paths[0]) paths.shift()
               if (paths[0] !== 'asset') {
                 const p = paths.reduce((pre, nxt) => {
@@ -46,7 +45,6 @@ module.exports = merge(commonConfig({
                     return ''
                   }
                 }, '')
-                console.log('p => ', p)
                 return p || '/'
               }
               return "/" + paths.join('/');

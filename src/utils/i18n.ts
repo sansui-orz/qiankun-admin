@@ -13,7 +13,6 @@ type ConfigType = { [language: string]: { [code: string]: string } };
 window.__i18nCache__ = {} as ConfigType
 
 export function i18nInit(config: ConfigType, defaultLanguage?: string) {
-  console.log('config ', config)
   /**
    config = {
       en: {

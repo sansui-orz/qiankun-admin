@@ -1,6 +1,7 @@
 import { qiankunWindow, renderWithQiankun, QiankunProps } from 'vite-plugin-qiankun/dist/helper'
 import { RenderType } from './main'
-import { useUserStore } from './store/user'
+import { useUserStore } from '@/store/user'
+import { useConfigStore } from '@/store/config'
 
 function qiankunInit(render: RenderType) {
   let root: Element | undefined
@@ -12,7 +13,8 @@ function qiankunInit(render: RenderType) {
         if (!root) {
           const { dispatch, getMainState } = props.store.connectVueStore('vue-sub-project', {
             // 需要关联的Store放在这里
-            'userState': useUserStore
+            'userState': useUserStore,
+            'configState': useConfigStore
           });
           [root] = render({ ...props, dispatch, getMainState });
         } else {

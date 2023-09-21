@@ -1,16 +1,14 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 
 const defaultState = {
-  username: '',
-  account: '',
-  avatar: '',
-  language: localStorage.getItem('language') || 'zh'
+  name: '',
+  version: ''
 }
 
-export type UserStoreType = typeof defaultState
+export type ConfigStoreType = typeof defaultState
 
-export const useUserStore = defineStore({
-  id: 'user',
+export const useConfigStore = defineStore({
+  id: 'config',
   state: () => ({ ...defaultState }),
 
   actions: {
@@ -22,5 +20,5 @@ export const useUserStore = defineStore({
 })
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useUserStore, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useConfigStore, import.meta.hot))
 }

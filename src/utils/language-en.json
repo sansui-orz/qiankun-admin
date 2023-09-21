@@ -8,5 +8,7 @@
   "system-setting": "System setting",
   "accounts-setting": "Accounts setting",
   "rules-setting": "Rules setting",
-  "menus-setting": "Menus setting"
+  "menus-setting": "Menus setting",
+  "store-action-example": "Store action example",
+  "store-action-example-vue": "Store action example vue"
 }

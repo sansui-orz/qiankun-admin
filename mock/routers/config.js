@@ -29,6 +29,11 @@ module.exports = function config(router) {
                   name: '数据表格',
                   languageCode: 'data-table',
                   url: '/databoard/data-table'
+                },
+                {
+                  name: '数据通信示例',
+                  languageCode: 'store-action-example',
+                  url: '/databoard/store-action-example'
                 }
               ]
             },
@@ -51,6 +56,11 @@ module.exports = function config(router) {
                   name: '菜单管理',
                   languageCode: 'menus-setting',
                   url: '/system/menus'
+                },
+                {
+                  name: '数据通信示例vue',
+                  languageCode: 'store-action-example-vue',
+                  url: '/system/store-action-example-vue'
                 }
               ]
             }

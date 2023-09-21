@@ -32,6 +32,9 @@ function Menu(props: iMenuProps) {
   const { menus, activeMenu } = useSelector<RootState, RootState["menusState"]>(
     (state) => state.menusState
   );
+  const { name, version } = useSelector<RootState, RootState["configState"]>(
+    (state) => state.configState
+  );
   const memoMenus = useMemo(() => trasMenus(menus || []), [menus]);
   const dispatch = useDispatch();
 
@@ -75,7 +78,14 @@ function Menu(props: iMenuProps) {
         <img className="w-40 shrink-0" src={logo} />
         {!collapsed ? (
           <span className="ml-10 text-white whitespace-nowrap">
-            {$t("system-name")}
+            {name ? (
+              <div className="flex items-end text-16">
+                {name}
+                <span className="ml-5 text-gray-500 text-12">v {version}</span>
+              </div>
+            ) : (
+              $t("system-name")
+            )}
           </span>
         ) : null}
       </div>
