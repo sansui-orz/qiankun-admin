@@ -1,6 +1,5 @@
 import { registerMicroApps, start } from 'qiankun';
 import connect from '@/store/connectMainStore'
-
 function qiankunInit() {
   registerMicroApps([
     {

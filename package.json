@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "cd ./mock && npm install && cd ../sub-projects/react-admin && npm install && cd ../vue-admin && npm install",
+    "tsc": "tsc",
     "build": "npx webpack --config ./webpack/webpack.config.prod.js",
     "start": "npx webpack server --env mode=development --config ./webpack/webpack.config.dev.js",
     "start-sub-vue": "cd ./sub-projects/vue-admin && npm start",
@@ -16,7 +17,8 @@
     "deploy": "npm run build && cd dist && npx http-server -p 8010 --cors",
     "deploy-sub-react": "cd ./sub-projects/react-admin && npm run build && cd dist && npx http-server -p 8011 --cors",
     "deploy-sub-vue": "cd ./sub-projects/vue-admin && npm run build && cd dist && npx http-server -p 8012 --cors",
-    "deploy-all": "npx concurrently \"npm run start-mock\" \"npm run deploy-sub-vue\" \"npm run deploy-sub-react\" \"npm run deploy\""
+    "deploy-all": "npx concurrently \"npm run start-mock\" \"npm run deploy-sub-vue\" \"npm run deploy-sub-react\" \"npm run deploy\"",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +30,8 @@
     "@babel/preset-env": "^7.22.14",
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.22.15",
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
     "@originjs/vite-plugin-federation": "^1.3.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
     "@types/js-cookie": "^3.0.3",
@@ -44,6 +48,7 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.3",
     "http-server": "^14.1.1",
+    "husky": "^8.0.3",
     "less": "^4.2.0",
     "less-loader": "^11.1.3",
     "postcss": "^8.4.29",
