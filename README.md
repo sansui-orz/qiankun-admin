@@ -14,7 +14,9 @@
 
 ## 启动服务
 
-首先在根文件夹，mock文件夹，以及sub-projects下的`react-admin`,`vue-admin`文件夹下都执行`npm install`进行依赖安装。
+开发环境要求: `node v18`, 实际测试16也行，最好18
+
+首先在根文件夹执行`npm install`进行依赖安装，已经在根目录的package.json中使用npm的钩子`postinstall`自动触发其他服务的依赖安装，如果后面拆分服务，记得将这里的依赖安装关系去掉。
 
 主应用使用`webpack5`+`React18`搭建。
 子应用分别使用`vite`+`Vue3`与`vite`+`React`搭建。

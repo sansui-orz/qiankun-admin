@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "cd ./mock && npm install && cd ../sub-projects/react-admin && npm install && cd ../vue-admin && npm install",
     "build": "npx webpack --config ./webpack/webpack.config.prod.js",
     "start": "npx webpack server --env mode=development --config ./webpack/webpack.config.dev.js",
     "start-sub-vue": "cd ./sub-projects/vue-admin && npm start",
