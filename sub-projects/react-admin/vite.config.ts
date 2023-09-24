@@ -19,6 +19,7 @@ export default defineConfig(({ mode }) => {
         less: {
           math: "always",
           javascriptEnabled: true,
+          additionalData: `@import "@/assets/base/variable.less";`
         },
       },
     },

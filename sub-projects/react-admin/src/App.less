@@ -1,14 +1,14 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import "@/assets/base/variable.less";
+
 @layer base {
   /* 因为twilwindcss 3增加了一个透明色的默认色 https://github.com/tailwindlabs/tailwindcss/issues/6602 */
   button, [type='button'], [type='reset'] {
     background-color: #ffffff;
   }
   [type='submit'] {
-      background-color: @buttonDefaultColor; // 我用的是naive ui
+      background-color: @buttonDefaultColor;
   }
 }
 
